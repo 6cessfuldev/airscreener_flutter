@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'common/style.dart';
@@ -14,13 +16,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: darkBlueColor),
-        useMaterial3: true,
-      ),
-      
-      home: const MyHomePage(title: 'Air Screener'),
+    return const MaterialApp(
+      home: MyHomePage(title: 'Air Screener'),
     );
   }
 }
@@ -54,7 +51,7 @@ class _MyHomePageState extends State<MyHomePage>
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: darkBlueColor, 
+        backgroundColor: backgroundColor,
         body: PageView(
             controller: _pageController,
             onPageChanged: (index) {
@@ -64,11 +61,11 @@ class _MyHomePageState extends State<MyHomePage>
             },
             children: [
               Container(
-                color: Colors.blueGrey,
+                color: Colors.transparent,
               ),
               const CheckInCounterPage(),
               Container(
-                color: Colors.blueGrey,
+                color: Colors.transparent,
               ),
             ]),
         bottomNavigationBar: BottomNavigationBar(
