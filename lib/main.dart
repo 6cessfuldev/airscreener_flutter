@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'common/style.dart';
@@ -17,6 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: MyHomePage(title: 'Air Screener'),
     );
   }
@@ -51,6 +50,7 @@ class _MyHomePageState extends State<MyHomePage>
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        extendBody: true,
         backgroundColor: backgroundColor,
         body: PageView(
             controller: _pageController,
@@ -69,7 +69,8 @@ class _MyHomePageState extends State<MyHomePage>
               ),
             ]),
         bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: lightBlueColor,
+          backgroundColor: Colors.blueAccent.withOpacity(0.5),
+          selectedItemColor: Colors.black,
           currentIndex: _selectedIndex,
           onTap: (index) {
             if (mounted) {

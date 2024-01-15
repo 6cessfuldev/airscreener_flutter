@@ -12,7 +12,9 @@ class ApiService {
   final String _departingFlightsListKey = dotenv.env['PassengerFlightsDeOdp']!;
 
   //인천국제공항공사_여객기 운항 현황 상세 조회 서비스(출발)
-  Future getDepartingFlightsList(Map<String, dynamic> request, {defaultData = false}) async {
+  Future<DepartingFlightsList> getDepartingFlightsList(
+      Map<String, dynamic> request,
+      {defaultData = false}) async {
     String path = _departingFlightsListPath;
     request['serviceKey'] = _departingFlightsListKey;
     try {
