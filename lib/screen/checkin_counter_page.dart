@@ -14,8 +14,8 @@ class CheckInCounterPage extends StatefulWidget {
 }
 
 class _CheckInCounterPageState extends State<CheckInCounterPage> {
-  TerminalidEnum? terminalid;
-  String? counterCode;
+  TerminalidEnum terminalid = TerminalidEnum.p01;
+  String counterCode = 'A';
 
   void setCounterCode(String counterCode) {
     setState(() {
@@ -37,8 +37,6 @@ class _CheckInCounterPageState extends State<CheckInCounterPage> {
           height: 30,
         ),
         clockContainer(),
-        // headerWidget(),
-        const TitleWidget(),
         selectBox(),
         const SizedBox(
           height: 20,
@@ -127,21 +125,6 @@ class _CheckInCounterPageState extends State<CheckInCounterPage> {
         ],
       ),
     );
-  }
-}
-
-class TitleWidget extends StatefulWidget {
-  const TitleWidget({super.key});
-
-  @override
-  State<TitleWidget> createState() => _TitleWidgetState();
-}
-
-class _TitleWidgetState extends State<TitleWidget> {
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-        height: 200, child: Image.asset('assets/images/character.png'));
   }
 }
 
