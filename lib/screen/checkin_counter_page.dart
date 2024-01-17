@@ -34,13 +34,10 @@ class _CheckInCounterPageState extends State<CheckInCounterPage> {
     return SingleChildScrollView(
       child: Column(children: [
         const SizedBox(
-          height: 30,
+          height: 20,
         ),
         clockContainer(),
         selectBox(),
-        const SizedBox(
-          height: 20,
-        ),
         FlightInfoTable(terminalid: terminalid, counterCode: counterCode),
         const SizedBox(
           height: 80,
