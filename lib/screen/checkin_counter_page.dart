@@ -173,7 +173,7 @@ class _CheckInCounterPageState extends State<CheckInCounterPage> {
     return SingleChildScrollView(
       child: Column(children: [
         // clockContainer(),
-        selectBox(),
+        selectBox(height: 100),
         FlightInfoTable(
           dataList: _dataList,
           isLoading: _isLoading,
@@ -194,9 +194,9 @@ class _CheckInCounterPageState extends State<CheckInCounterPage> {
         ));
   }
 
-  Widget selectBox() {
+  Widget selectBox({required double height}) {
     return SizedBox(
-      height: 100,
+      height: height,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
