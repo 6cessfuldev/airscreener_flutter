@@ -26,7 +26,6 @@ class _FlightInfoTableState extends State<FlightInfoTable> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: widget.height,
       clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
         color: backgroundColor,
