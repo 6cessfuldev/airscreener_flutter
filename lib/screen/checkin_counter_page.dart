@@ -46,20 +46,20 @@ class _CheckInCounterPageState extends State<CheckInCounterPage> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
         setState(() {
-          debugPrint("setState");
           _isLoading = isLoading;
         });
       }
     });
-    debugPrint('isLoading $_isLoading');
   }
 
   Future<void> dataFetchAndFilter() async {
     setLoadingStatus(true);
     await dataFetch();
-    setState(() {
-      _dataList = filterData(_dataList);
-    });
+    if (mounted) {
+      setState(() {
+        _dataList = filterData(_dataList);
+      });
+    }
     setLoadingStatus(false);
   }
 
@@ -91,8 +91,6 @@ class _CheckInCounterPageState extends State<CheckInCounterPage> {
         _apiService.getDepartingFlightsList(tommorowRequest, defaultData: {}));
 
     List responseList = await Future.wait(tasks);
-
-    debugPrint('status ');
 
     List<DepartingFlightsInfo> resultList = [];
     if (responseList[0].status == 200) {
