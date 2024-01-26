@@ -23,11 +23,65 @@ class _FlightInfoTableState extends State<FlightInfoTable> {
     return '${rawDate.substring(8, 10)}:${rawDate.substring(10, 12)}';
   }
 
-  @override
-  Widget build(BuildContext context) {
+  List<TableRow> _tableRowList() {
     bool backgroundFlag = false;
     String? lastScheduleDateTime;
     String? lastEstiamteDateTime;
+    return widget.dataList.map((info) {
+      if (lastEstiamteDateTime == null || lastScheduleDateTime == null) {
+        lastEstiamteDateTime = info.estimatedDateTime;
+        lastScheduleDateTime = info.scheduleDateTime;
+      } else {
+        if (lastEstiamteDateTime != info.estimatedDateTime ||
+            lastScheduleDateTime != info.scheduleDateTime) {
+          backgroundFlag = !backgroundFlag;
+        }
+      }
+      return TableRow(
+          decoration:
+              BoxDecoration(color: backgroundFlag ? null : Colors.white54),
+          children: [
+            Center(
+                child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  convertDateFormat(info.scheduleDateTime),
+                  textAlign: TextAlign.center,
+                ),
+                if (info.estimatedDateTime != info.scheduleDateTime)
+                  Text(
+                    '-> ${convertDateFormat(info.estimatedDateTime)}',
+                    style: const TextStyle(color: Colors.red),
+                    textAlign: TextAlign.center,
+                  ),
+              ],
+            )),
+            SizedBox(
+                height: 45,
+                child: Center(
+                    child: Text(
+                  info.flightId ?? '',
+                  textAlign: TextAlign.center,
+                ))),
+            Center(
+                child: Text(
+              info.airport ?? '',
+              textAlign: TextAlign.center,
+            )),
+            Center(
+                child: Text(
+              info.gatenumber ?? '',
+              textAlign: TextAlign.center,
+              style: const TextStyle(color: Colors.blueGrey),
+            ))
+          ]);
+    }).toList();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    List<TableRow> dataWidgets = _tableRowList();
 
     return Container(
       clipBehavior: Clip.hardEdge,
@@ -91,57 +145,7 @@ class _FlightInfoTableState extends State<FlightInfoTable> {
                   textAlign: TextAlign.center,
                 )),
               ]),
-              ...widget.dataList.map((info) {
-                if (lastEstiamteDateTime == null ||
-                    lastScheduleDateTime == null) {
-                  lastEstiamteDateTime = info.estimatedDateTime;
-                  lastScheduleDateTime = info.scheduleDateTime;
-                } else {
-                  if (lastEstiamteDateTime != info.estimatedDateTime ||
-                      lastScheduleDateTime != info.scheduleDateTime) {
-                    backgroundFlag = !backgroundFlag;
-                  }
-                }
-                return TableRow(
-                    decoration: BoxDecoration(
-                        color: backgroundFlag ? null : Colors.white54),
-                    children: [
-                      Center(
-                          child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            convertDateFormat(info.scheduleDateTime),
-                            textAlign: TextAlign.center,
-                          ),
-                          if (info.estimatedDateTime != info.scheduleDateTime)
-                            Text(
-                              '-> ${convertDateFormat(info.estimatedDateTime)}',
-                              style: const TextStyle(color: Colors.red),
-                              textAlign: TextAlign.center,
-                            ),
-                        ],
-                      )),
-                      SizedBox(
-                          height: 45,
-                          child: Center(
-                              child: Text(
-                            info.flightId ?? '',
-                            textAlign: TextAlign.center,
-                          ))),
-                      Center(
-                          child: Text(
-                        info.airport ?? '',
-                        textAlign: TextAlign.center,
-                      )),
-                      Center(
-                          child: Text(
-                        info.gatenumber ?? '',
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(color: Colors.blueGrey),
-                      ))
-                    ]);
-              })
+              ...dataWidgets
             ],
           ),
         ),
