@@ -170,18 +170,22 @@ class _CheckInCounterPageState extends State<CheckInCounterPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(children: [
-        selectBox(height: 100),
-        FlightInfoTable(
-          dataList: _dataList,
-          isLoading: _isLoading,
-            height: MediaQuery.of(context).size.height - 100 - 80 - 80
-        ),
-        const SizedBox(
-          height: 80,
-        )
-      ]),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        double maxHeight = constraints.constrainHeight();
+        return SingleChildScrollView(
+          child: Column(children: [
+            selectBox(height: 100),
+            FlightInfoTable(
+                dataList: _dataList,
+                isLoading: _isLoading,
+                height: MediaQuery.of(context).size.height - 100 - 60),
+            const SizedBox(
+              height: 80,
+            )
+          ]),
+        );
+      },
     );
   }
 
