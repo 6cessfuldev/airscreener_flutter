@@ -48,11 +48,11 @@ class _MyHomePageState extends State<MyHomePage>
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        extendBody: true,
-        backgroundColor: backgroundColor,
-        body: PageView(
+    return Scaffold(
+      extendBody: true,
+      backgroundColor: backgroundColor,
+      body: SafeArea(
+        child: PageView(
             controller: _pageController,
             onPageChanged: (index) {
               setState(() {
@@ -68,30 +68,30 @@ class _MyHomePageState extends State<MyHomePage>
                 color: Colors.transparent,
               ),
             ]),
-        bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: Colors.blueAccent.withOpacity(0.5),
-          selectedItemColor: Colors.black,
-          currentIndex: _selectedIndex,
-          onTap: (index) {
-            if (mounted) {
-              setState(() {
-                _selectedIndex = index;
-              });
-              _pageController.animateToPage(
-                index,
-                duration: const Duration(milliseconds: 300),
-                curve: Curves.ease,
-              );
-            }
-          },
-          items: const [
-            BottomNavigationBarItem(
-                icon: Icon(Icons.backpack_sharp), label: '휴대'),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.luggage_outlined), label: '위탁'),
-            BottomNavigationBarItem(icon: Icon(Icons.settings), label: '설정'),
-          ],
-        ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.blueAccent.withOpacity(0.5),
+        selectedItemColor: Colors.black,
+        currentIndex: _selectedIndex,
+        onTap: (index) {
+          if (mounted) {
+            setState(() {
+              _selectedIndex = index;
+            });
+            _pageController.animateToPage(
+              index,
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.ease,
+            );
+          }
+        },
+        items: const [
+          BottomNavigationBarItem(
+              icon: Icon(Icons.backpack_sharp), label: '휴대'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.luggage_outlined), label: '위탁'),
+          BottomNavigationBarItem(icon: Icon(Icons.settings), label: '설정'),
+        ],
       ),
     );
   }
