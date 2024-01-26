@@ -28,19 +28,6 @@ class _CheckInCounterPageState extends State<CheckInCounterPage> {
   void initState() {
     dataFetchAndFilter();
     super.initState();
-
-    _apiService.getDepartingFlightsList({
-      'pageNo': 1,
-      'numOfRows': 4000,
-      'type': 'json',
-
-      // 'from_time': DateFormat('HHmm').format(DateTime.now()).toString(),
-      'searchday': DateFormat('yyyyMMdd').format(DateTime.now()).toString()
-    }).then((value) => value.items!.map((e) {
-          if (e.chkinrange!.contains('E')) {
-            print('e');
-          }
-        }));
   }
 
   void setCounterCode(String counterCode) {
