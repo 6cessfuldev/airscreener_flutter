@@ -119,7 +119,6 @@ class _FlightInfoTableState extends State<FlightInfoTable> {
                       textAlign: TextAlign.center,
                       style: const TextStyle(color: Colors.blueGrey),
                     )),
-                    // Center(child: Text(info.scheduleDateTime ?? '')),
                     
                   ]))
             ],
