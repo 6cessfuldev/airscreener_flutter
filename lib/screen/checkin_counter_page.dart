@@ -176,6 +176,7 @@ class _CheckInCounterPageState extends State<CheckInCounterPage> {
         FlightInfoTable(
           dataList: _dataList,
           isLoading: _isLoading,
+            height: MediaQuery.of(context).size.height - 100 - 80 - 80
         ),
         const SizedBox(
           height: 80,

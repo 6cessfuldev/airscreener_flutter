@@ -4,10 +4,14 @@ import '../model/departing_flights_list.dart';
 
 class FlightInfoTable extends StatefulWidget {
   const FlightInfoTable(
-      {super.key, required this.dataList, required this.isLoading});
+      {super.key,
+      required this.dataList,
+      required this.isLoading,
+      required this.height});
 
   final List<DepartingFlightsInfo> dataList;
   final bool isLoading;
+  final double height;
 
   @override
   State<FlightInfoTable> createState() => _FlightInfoTableState();
@@ -22,6 +26,7 @@ class _FlightInfoTableState extends State<FlightInfoTable> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: widget.height,
       clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
         color: backgroundColor,
@@ -41,8 +46,8 @@ class _FlightInfoTableState extends State<FlightInfoTable> {
         ],
       ),
       child: SizedBox(
-        width: MediaQuery.of(context).size.width * 0.95,
-        height: 550,
+        width: MediaQuery.of(context).size.width,
+        height: widget.height - (2 * outsideShadowDistance),
         child: SingleChildScrollView(
           child: Table(
             border: TableBorder.all(
@@ -100,7 +105,6 @@ class _FlightInfoTableState extends State<FlightInfoTable> {
                           ),
                       ],
                     )),
-                    
                     SizedBox(
                         height: 45,
                         child: Center(
@@ -119,7 +123,6 @@ class _FlightInfoTableState extends State<FlightInfoTable> {
                       textAlign: TextAlign.center,
                       style: const TextStyle(color: Colors.blueGrey),
                     )),
-                    
                   ]))
             ],
           ),
