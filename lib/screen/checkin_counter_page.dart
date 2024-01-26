@@ -172,7 +172,6 @@ class _CheckInCounterPageState extends State<CheckInCounterPage> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(children: [
-        // clockContainer(),
         selectBox(height: 100),
         FlightInfoTable(
           dataList: _dataList,
