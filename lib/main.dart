@@ -72,8 +72,8 @@ class _MyHomePageState extends State<MyHomePage>
             ]),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.blueAccent.withOpacity(0.5),
-        selectedItemColor: Colors.black,
+        backgroundColor: Colors.white,
+        selectedItemColor: Colors.blueAccent,
         currentIndex: _selectedIndex,
         onTap: (index) {
           if (mounted) {
