@@ -2,7 +2,6 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
-import 'package:slide_digital_clock/slide_digital_clock.dart';
 
 import '../common/style.dart';
 import '../model/departing_flights_list.dart';
@@ -199,60 +198,6 @@ class _CheckInCounterPageState extends State<CheckInCounterPage> {
           height: 80,
         )
       ]),
-    );
-  }
-
-  Widget clockContainer() {
-    double width = 200;
-    double height = 70;
-    return SizedBox(
-      width: width,
-      height: height,
-      child: Container(
-        decoration: BoxDecoration(
-          color: backgroundColor,
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: [
-            BoxShadow(
-                offset:
-                    const Offset(outsideShadowDistance, outsideShadowDistance),
-                color: Colors.blue.shade300,
-                blurRadius: outsideShadowDistance,
-                spreadRadius: 1),
-            const BoxShadow(
-                offset: Offset(-outsideShadowDistance, -outsideShadowDistance),
-                color: Colors.white60,
-                blurRadius: outsideShadowDistance,
-                spreadRadius: 1)
-          ],
-        ),
-        child: Container(
-            margin: const EdgeInsets.all(3.0),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: Colors.white, width: 0.5)),
-            child: Center(
-              child: DigitalClock(
-                showSecondsDigit: true,
-                amPmDigitTextStyle: const TextStyle(fontFamily: 'Montserrat'),
-                hourMinuteDigitTextStyle: Theme.of(context)
-                    .textTheme
-                    .headlineMedium!
-                    .copyWith(color: Colors.white70),
-                secondDigitTextStyle: Theme.of(context)
-                    .textTheme
-                    .headlineMedium!
-                    .copyWith(color: Colors.white),
-                colon: Text(
-                  ":",
-                  style: Theme.of(context)
-                      .textTheme
-                      .headlineMedium!
-                      .copyWith(color: Colors.white),
-                ),
-              ),
-            )),
-      ),
     );
   }
 
