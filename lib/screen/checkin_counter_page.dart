@@ -69,11 +69,14 @@ class _CheckInCounterPageState extends State<CheckInCounterPage> {
   }
 
   Future<void> dataFetch() async {
-    final flightsInfoProvider = Provider.of<FlightsInfoProvider>(context);
     List<DepartingFlightsInfo> resultList =
         await _apiService.getFlightsInfoToTomorrow();
-    flightsInfoProvider.setFlightsInfos(resultList);
     _dataList = resultList;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final flightsInfoProvider =
+          Provider.of<FlightsInfoProvider>(context, listen: false);
+      flightsInfoProvider.setFlightsInfos(resultList);
+    });
   }
 
   List<DepartingFlightsInfo> filterData(List<DepartingFlightsInfo> resultList) {
