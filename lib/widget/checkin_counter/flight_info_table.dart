@@ -59,15 +59,13 @@ class _FlightInfoTableState extends State<FlightInfoTable> {
                 child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  convertDateFormat(info.scheduleDateTime),
-                  textAlign: TextAlign.center,
+                Text(convertDateFormat(info.scheduleDateTime),
+                    textAlign: TextAlign.center,
                     style: info.estimatedDateTime != info.scheduleDateTime
                         ? const TextStyle(
                             color: darkestBlueColor,
                             decoration: TextDecoration.lineThrough)
-                        : null
-                ),
+                        : null),
                 if (info.estimatedDateTime != info.scheduleDateTime)
                   Text(
                     '-> ${convertDateFormat(info.estimatedDateTime)}',
@@ -123,8 +121,9 @@ class _FlightInfoTableState extends State<FlightInfoTable> {
   @override
   Widget build(BuildContext context) {
     List<TableRow> dataWidgets = _tableRowList();
-    _scrollController.animateTo(0,
-        curve: Curves.ease, duration: const Duration(milliseconds: 300));
+    WidgetsBinding.instance.addPostFrameCallback((_) =>
+        _scrollController.animateTo(0,
+            curve: Curves.ease, duration: const Duration(milliseconds: 300)));
 
     return Container(
       clipBehavior: Clip.hardEdge,
