@@ -191,15 +191,6 @@ class _CheckInCounterPageState extends State<CheckInCounterPage> {
     );
   }
 
-  Widget headerWidget() {
-    return const SizedBox(
-        height: 100,
-        child: Text(
-          '위탁 화이팅~!',
-          style: TextStyle(fontSize: 50, color: lightPinkColor),
-        ));
-  }
-
   Widget selectBox({required double height}) {
     return SizedBox(
       height: height,
