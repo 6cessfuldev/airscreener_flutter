@@ -174,6 +174,7 @@ class _CheckInCounterPageState extends State<CheckInCounterPage> {
   @override
   Widget build(BuildContext context) {
     const double selectBoxHeight = 80;
+    const double bottomGap = 5;
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -184,7 +185,8 @@ class _CheckInCounterPageState extends State<CheckInCounterPage> {
             FlightInfoTable(
                 dataList: _dataList,
                 isLoading: _isLoading,
-                height: maxHeight - selectBoxHeight),
+                height: maxHeight - selectBoxHeight - bottomGap),
+            const SizedBox(height: bottomGap)
           ]),
         );
       },
