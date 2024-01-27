@@ -206,10 +206,12 @@ class _CheckInCounterPageState extends State<CheckInCounterPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           TerminalSelectBox(
+              isLoading: _isLoading,
               reload: dataFetchAndFilter,
               selectedValue: terminalid,
               setSelectedValue: setTerminalid),
           CheckInCounterSelectBox(
+              isLoading: _isLoading,
               reload: dataFetchAndFilter,
               selectedValue: counterCode,
               setSelectedValue: setCounterCode),
@@ -223,10 +225,12 @@ class _CheckInCounterPageState extends State<CheckInCounterPage> {
 class CheckInCounterSelectBox extends StatefulWidget {
   const CheckInCounterSelectBox(
       {super.key,
+      required this.isLoading,
       required this.reload,
       required this.selectedValue,
       required this.setSelectedValue});
 
+  final bool isLoading;
   final Function reload;
   final String? selectedValue;
   final Function setSelectedValue;
@@ -305,7 +309,7 @@ class _CheckInCounterSelectBoxState extends State<CheckInCounterSelectBox> {
                       child: Text(
                         item,
                         style: const TextStyle(
-                          fontSize: 14,
+                          fontSize: 16,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                         ),
@@ -328,7 +332,7 @@ class _CheckInCounterSelectBoxState extends State<CheckInCounterSelectBox> {
               decoration: BoxDecoration(
                 color: backgroundColor,
                 borderRadius: BorderRadius.circular(14),
-                boxShadow: isClicked
+                boxShadow: isClicked || widget.isLoading
                     ? null
                     : [
                         BoxShadow(
@@ -383,10 +387,12 @@ class _CheckInCounterSelectBoxState extends State<CheckInCounterSelectBox> {
 class TerminalSelectBox extends StatefulWidget {
   const TerminalSelectBox(
       {super.key,
+      required this.isLoading,
       required this.reload,
       required this.selectedValue,
       required this.setSelectedValue});
 
+  final bool isLoading;
   final Function reload;
   final TerminalidEnum? selectedValue;
   final Function setSelectedValue;
@@ -434,7 +440,7 @@ class _TerminalSelectBoxState extends State<TerminalSelectBox> {
                       child: Text(
                         item.convertEnumToStr,
                         style: const TextStyle(
-                          fontSize: 14,
+                          fontSize: 16,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                         ),
@@ -459,7 +465,7 @@ class _TerminalSelectBoxState extends State<TerminalSelectBox> {
               decoration: BoxDecoration(
                 color: backgroundColor,
                 borderRadius: BorderRadius.circular(14),
-                boxShadow: isClicked
+                boxShadow: isClicked || widget.isLoading
                     ? null
                     : [
                         BoxShadow(
