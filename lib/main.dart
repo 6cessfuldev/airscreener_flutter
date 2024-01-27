@@ -3,9 +3,12 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'common/style.dart';
 import 'screen/checkin_counter_page.dart';
 import 'screen/search_page.dart';
+import 'service/preferences_service.dart';
 
 Future main() async {
   await dotenv.load(fileName: "assets/api_key.env");
+  WidgetsFlutterBinding.ensureInitialized();
+  await PreferencesService().init();
   runApp(const MyApp());
 }
 
