@@ -67,7 +67,6 @@ class _CheckInCounterPageState extends State<CheckInCounterPage> {
   }
 
   Future<void> dataFetch() async {
-
     List<DepartingFlightsInfo> resultList =
         await _apiService.getFlightsInfoToTomorrow();
     _dataList = resultList;
@@ -201,6 +200,8 @@ class _CheckInCounterPageState extends State<CheckInCounterPage> {
   }
 
   Widget reloadTimeWidget() {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double fontSize = screenWidth < 380 ? 11 : 13;
     return Container(
         height: 40,
         alignment: Alignment.center,
@@ -208,17 +209,12 @@ class _CheckInCounterPageState extends State<CheckInCounterPage> {
           color: backgroundColor,
           borderRadius: BorderRadius.circular(14.0),
         ),
-        child: FittedBox(
-          fit: BoxFit.scaleDown,
-          child: Text(
-            lastUpdateDate != null
-                ? DateFormat('yy-MM-dd\nHH:mm')
-                    .format(lastUpdateDate!)
-                    .toString()
-                : '',
-            style: const TextStyle(color: mainBlueColor),
-            textAlign: TextAlign.center,
-          ),
+        child: Text(
+          lastUpdateDate != null
+              ? DateFormat('yy-MM-dd\nHH:mm').format(lastUpdateDate!).toString()
+              : '',
+          style: TextStyle(fontSize: fontSize, color: mainBlueColor),
+          textAlign: TextAlign.center,
         ));
   }
 }
