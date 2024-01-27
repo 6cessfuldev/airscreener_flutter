@@ -91,13 +91,13 @@ class _TerminalSelectBoxState extends State<TerminalSelectBox> {
                         BoxShadow(
                             offset: const Offset(
                                 outsideShadowDistance, outsideShadowDistance),
-                            color: Colors.blue.shade300,
+                            color: downsideShadowColor,
                             blurRadius: outsideShadowDistance,
                             spreadRadius: 2),
                         const BoxShadow(
                             offset: Offset(
                                 -outsideShadowDistance, -outsideShadowDistance),
-                            color: Colors.white60,
+                            color: upsideShadowColor,
                             blurRadius: outsideShadowDistance,
                             spreadRadius: 2)
                       ],
