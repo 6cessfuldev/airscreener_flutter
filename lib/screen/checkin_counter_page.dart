@@ -173,7 +173,7 @@ class _CheckInCounterPageState extends State<CheckInCounterPage> {
 
   @override
   Widget build(BuildContext context) {
-    const double selectBoxHeight = 80;
+    const double selectBoxHeight = 70;
     const double bottomGap = 5;
 
     return LayoutBuilder(
