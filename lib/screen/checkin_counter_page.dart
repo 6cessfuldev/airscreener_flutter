@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 import '../common/style.dart';
 import '../model/departing_flights_list.dart';
 import '../model/terminalid_enum.dart';
+import '../provider/flights_info_provider.dart';
 import '../service/api_service.dart';
 import '../widget/checkin_counter/check_in_counter_select_box.dart';
 import '../widget/checkin_counter/flight_info_table.dart';
@@ -67,8 +69,10 @@ class _CheckInCounterPageState extends State<CheckInCounterPage> {
   }
 
   Future<void> dataFetch() async {
+    final flightsInfoProvider = Provider.of<FlightsInfoProvider>(context);
     List<DepartingFlightsInfo> resultList =
         await _apiService.getFlightsInfoToTomorrow();
+    flightsInfoProvider.setFlightsInfos(resultList);
     _dataList = resultList;
   }
 
