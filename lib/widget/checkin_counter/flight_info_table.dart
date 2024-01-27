@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../common/style.dart';
-import '../model/departing_flights_list.dart';
+import '../../common/style.dart';
+import '../../model/departing_flights_list.dart';
 
 class FlightInfoTable extends StatefulWidget {
   const FlightInfoTable(
