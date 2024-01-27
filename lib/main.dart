@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'common/style.dart';
 import 'screen/checkin_counter_page.dart';
+import 'screen/search_page.dart';
 
 Future main() async {
   await dotenv.load(fileName: "assets/api_key.env");
@@ -70,9 +71,7 @@ class _MyHomePageState extends State<MyHomePage>
             },
             children: [
               const CheckInCounterPage(),
-              Container(
-                color: Colors.transparent,
-              ),
+              const SearchPage(),
               Container(
                 color: Colors.transparent,
               ),
