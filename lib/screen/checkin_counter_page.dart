@@ -105,10 +105,14 @@ class _CheckInCounterPageState extends State<CheckInCounterPage> {
 
   List<DepartingFlightsInfo> filterData(List<DepartingFlightsInfo> resultList) {
     return resultList.where((item) {
-      if (item.terminalid != null &&
-          !item.terminalid!
-              .contains(terminalid.toString().split('.').last.toUpperCase())) {
-        return false;
+      if (item.terminalid != null) {
+        if (terminalid == TerminalidEnum.p01 &&
+            !['P01', 'P02'].contains(item.terminalid)) {
+          return false;
+        } else if (terminalid == TerminalidEnum.p02 &&
+            item.terminalid != 'P03') {
+          return false;
+        }
       }
 
       /// counterCode 선택했을 경우 filtering 로직
