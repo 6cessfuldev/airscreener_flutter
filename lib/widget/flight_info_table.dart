@@ -98,10 +98,19 @@ class _FlightInfoTableState extends State<FlightInfoTable> {
               )),
             ),
             Center(
-                child: Text(
-              info.gatenumber ?? '',
-              textAlign: TextAlign.center,
-              style: const TextStyle(color: Colors.blueGrey),
+                child: Column(
+              children: [
+                Text(
+                  info.chkinrange ?? '',
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(color: Colors.blueGrey),
+                ),
+                Text(
+                  info.gatenumber ?? '',
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(color: Colors.blueGrey),
+                ),
+              ],
             ))
           ]);
     }).toList();
@@ -150,9 +159,9 @@ class _FlightInfoTableState extends State<FlightInfoTable> {
               ),
               columnWidths: const <int, TableColumnWidth>{
                 0: FlexColumnWidth(1.5),
-                1: FlexColumnWidth(2),
-                2: FlexColumnWidth(3),
-                3: FlexColumnWidth(1.2),
+                1: FlexColumnWidth(2.5),
+                2: FlexColumnWidth(2.5),
+                3: FlexColumnWidth(2),
               },
               defaultVerticalAlignment: TableCellVerticalAlignment.middle,
               children: [
@@ -180,7 +189,7 @@ class _FlightInfoTableState extends State<FlightInfoTable> {
                   )),
                   Center(
                       child: Text(
-                    '게이트',
+                    '체크인/게이트',
                     style: TextStyle(color: Colors.blueAccent),
                     textAlign: TextAlign.center,
                   )),
