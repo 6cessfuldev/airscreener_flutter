@@ -21,6 +21,7 @@ class _CheckInCounterPageState extends State<CheckInCounterPage> {
   TerminalidEnum terminalid = TerminalidEnum.p01;
   String counterCode = 'A';
   bool _isLoading = true;
+  DateTime? lastUpdateDate;
 
   final ApiService _apiService = ApiService();
   List<DepartingFlightsInfo> _dataList = [];
@@ -59,6 +60,7 @@ class _CheckInCounterPageState extends State<CheckInCounterPage> {
     if (mounted) {
       setState(() {
         _dataList = filterData(_dataList);
+        lastUpdateDate = DateTime.now();
       });
     }
     setLoadingStatus(false);
@@ -232,11 +234,24 @@ class _CheckInCounterPageState extends State<CheckInCounterPage> {
   }
 
   Widget reloadTimeWidget() {
-    return const Center(
-        child: Text(
-      '2023-10-10 10:10',
-      style: TextStyle(color: fontColor),
-      textAlign: TextAlign.center,
-    ));
+    return Container(
+        height: 40,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: backgroundColor,
+          borderRadius: BorderRadius.circular(14.0),
+        ),
+        child: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            lastUpdateDate != null
+                ? DateFormat('yy-MM-dd\nHH:mm')
+                    .format(lastUpdateDate!)
+                    .toString()
+                : '',
+            style: const TextStyle(color: mainBlueColor),
+            textAlign: TextAlign.center,
+          ),
+        ));
   }
 }
