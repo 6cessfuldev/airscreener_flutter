@@ -279,7 +279,7 @@ class _CheckInCounterSelectBoxState extends State<CheckInCounterSelectBox> {
       padding: const EdgeInsets.all(outsideShadowDistance),
       child: SizedBox(
         // padding: const EdgeInsets.symmetric(vertical: 30.0),
-        width: 85,
+        width: 80,
         height: 50,
         child: DropdownButtonHideUnderline(
           child: DropdownButton2<String>(
@@ -361,12 +361,12 @@ class _CheckInCounterSelectBoxState extends State<CheckInCounterSelectBox> {
             ),
             dropdownStyleData: DropdownStyleData(
               maxHeight: 200,
-              width: 120,
+              width: 80,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(14),
                 color: Colors.blue.withOpacity(0.6),
               ),
-              offset: const Offset(-20, 0),
+              offset: const Offset(0, 0),
               scrollbarTheme: ScrollbarThemeData(
                 radius: const Radius.circular(40),
                 thickness: MaterialStateProperty.all(6),
@@ -414,7 +414,7 @@ class _TerminalSelectBoxState extends State<TerminalSelectBox> {
       padding: const EdgeInsets.all(outsideShadowDistance),
       child: SizedBox(
         // padding: const EdgeInsets.symmetric(vertical: 30.0),
-        width: 140,
+        width: 120,
         height: 50,
         child: DropdownButtonHideUnderline(
           child: DropdownButton2<String>(
@@ -499,7 +499,7 @@ class _TerminalSelectBoxState extends State<TerminalSelectBox> {
                 borderRadius: BorderRadius.circular(14),
                 color: Colors.blue.withOpacity(0.6),
               ),
-              offset: const Offset(-20, 0),
+              offset: const Offset(0, 0),
               scrollbarTheme: ScrollbarThemeData(
                 radius: const Radius.circular(40),
                 thickness: MaterialStateProperty.all(6),
