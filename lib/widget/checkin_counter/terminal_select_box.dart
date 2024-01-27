@@ -109,7 +109,7 @@ class _TerminalSelectBoxState extends State<TerminalSelectBox> {
                 Icons.arrow_forward_ios_outlined,
               ),
               iconSize: 14,
-              iconEnabledColor: Colors.yellow,
+              iconEnabledColor: mainBlueColor,
               iconDisabledColor: Colors.grey,
             ),
             dropdownStyleData: DropdownStyleData(
@@ -117,7 +117,7 @@ class _TerminalSelectBoxState extends State<TerminalSelectBox> {
               width: 120,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(14),
-                color: mainBlueColor.withOpacity(0.6),
+                color: lightBlueColor.withOpacity(0.5),
               ),
               offset: const Offset(0, 0),
               scrollbarTheme: ScrollbarThemeData(

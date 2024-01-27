@@ -50,7 +50,14 @@ class _MyHomePageState extends State<MyHomePage>
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
-      backgroundColor: backgroundColor,
+      backgroundColor: lightestBlueColor,
+      appBar: AppBar(
+        title: const Text(
+          '강미연 화이팅💕',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: darkestBlueColor,
+      ),
       body: SafeArea(
         child: PageView(
             physics: const NeverScrollableScrollPhysics(),
@@ -72,8 +79,9 @@ class _MyHomePageState extends State<MyHomePage>
             ]),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.white,
-        selectedItemColor: Colors.blueAccent,
+        backgroundColor: lightBlueColor,
+        selectedItemColor: darkestBlueColor,
+        unselectedItemColor: Colors.white,
         currentIndex: _selectedIndex,
         onTap: (index) {
           if (mounted) {

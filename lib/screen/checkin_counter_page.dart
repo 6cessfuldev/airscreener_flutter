@@ -173,7 +173,7 @@ class _CheckInCounterPageState extends State<CheckInCounterPage> {
 
   @override
   Widget build(BuildContext context) {
-    const double selectBoxHeight = 100;
+    const double selectBoxHeight = 80;
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -197,19 +197,35 @@ class _CheckInCounterPageState extends State<CheckInCounterPage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          // Expanded(child: reloadTimeWidget()),
           TerminalSelectBox(
               isLoading: _isLoading,
               reload: dataFetchAndFilter,
               selectedValue: terminalid,
               setSelectedValue: setTerminalid),
+          const SizedBox(
+            width: 5,
+          ),
           CheckInCounterSelectBox(
               isLoading: _isLoading,
               reload: dataFetchAndFilter,
               selectedValue: counterCode,
               setSelectedValue: setCounterCode),
+          const SizedBox(
+            width: 5,
+          ),
           ReloadButton(reload: dataFetchAndFilter, isLoading: _isLoading),
         ],
       ),
     );
+  }
+
+  Widget reloadTimeWidget() {
+    return const Center(
+        child: Text(
+      '2023-10-10 10:10',
+      style: TextStyle(color: fontColor),
+      textAlign: TextAlign.center,
+    ));
   }
 }

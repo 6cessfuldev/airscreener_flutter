@@ -64,6 +64,7 @@ class _FlightInfoTableState extends State<FlightInfoTable> {
                   textAlign: TextAlign.center,
                     style: info.estimatedDateTime != info.scheduleDateTime
                         ? const TextStyle(
+                            color: darkestBlueColor,
                             decoration: TextDecoration.lineThrough)
                         : null
                 ),
@@ -80,11 +81,13 @@ class _FlightInfoTableState extends State<FlightInfoTable> {
               children: [
                 Text(
                   info.flightId ?? '',
+                  style: const TextStyle(color: darkestBlueColor),
                   textAlign: TextAlign.center,
                 ),
                 if (info.remark != null && info.remark != "")
                   Text(
                     info.remark!,
+                    style: const TextStyle(color: darkestBlueColor),
                     textAlign: TextAlign.center,
                   ),
               ],
@@ -94,6 +97,7 @@ class _FlightInfoTableState extends State<FlightInfoTable> {
               child: Center(
                   child: Text(
                 info.airport ?? '',
+                style: const TextStyle(color: darkestBlueColor),
                 textAlign: TextAlign.center,
               )),
             ),
@@ -135,13 +139,13 @@ class _FlightInfoTableState extends State<FlightInfoTable> {
                         outsideShadowDistance, outsideShadowDistance),
                     color: downsideShadowColor,
                     blurRadius: outsideShadowDistance,
-                    spreadRadius: 5),
+                    spreadRadius: 3),
                 const BoxShadow(
                     offset:
                         Offset(-outsideShadowDistance, -outsideShadowDistance),
                     color: upsideShadowColor,
                     blurRadius: outsideShadowDistance,
-                    spreadRadius: 5)
+                    spreadRadius: 3)
               ],
       ),
       child: ConstrainedBox(
@@ -171,26 +175,26 @@ class _FlightInfoTableState extends State<FlightInfoTable> {
                     child: Center(
                         child: Text(
                       '출발 시간',
-                      style: TextStyle(color: Colors.blueAccent),
+                      style: TextStyle(color: mainBlueColor),
                       textAlign: TextAlign.center,
                     )),
                   ),
                   Center(
                       child: Text(
                     '편명',
-                    style: TextStyle(color: Colors.blueAccent),
+                    style: TextStyle(color: mainBlueColor),
                     textAlign: TextAlign.center,
                   )),
                   Center(
                       child: Text(
                     '도착지・경유지',
-                    style: TextStyle(color: Colors.blueAccent),
+                    style: TextStyle(color: mainBlueColor),
                     textAlign: TextAlign.center,
                   )),
                   Center(
                       child: Text(
                     '체크인/게이트',
-                    style: TextStyle(color: Colors.blueAccent),
+                    style: TextStyle(color: mainBlueColor),
                     textAlign: TextAlign.center,
                   )),
                 ]),

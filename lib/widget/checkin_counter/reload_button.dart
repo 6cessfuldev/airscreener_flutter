@@ -84,7 +84,7 @@ class _ReloadBoxState extends State<ReloadButton>
               return ColorFiltered(
                 colorFilter:
                     const ColorFilter.mode(
-                    lightestBlueColor, BlendMode.srcATop),
+                    darkBlueColor, BlendMode.srcATop),
                 child: child,
               );
             },
