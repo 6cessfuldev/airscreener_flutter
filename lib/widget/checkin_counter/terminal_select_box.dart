@@ -35,7 +35,7 @@ class _TerminalSelectBoxState extends State<TerminalSelectBox> {
       child: SizedBox(
         // padding: const EdgeInsets.symmetric(vertical: 30.0),
         width: 120,
-        height: 50,
+        height: 40,
         child: DropdownButtonHideUnderline(
           child: DropdownButton2<String>(
             isExpanded: true,

@@ -51,8 +51,8 @@ class _ReloadBoxState extends State<ReloadButton>
           controller.repeat();
         },
         child: Container(
-          height: 50,
-          width: 50,
+          height: 40,
+          width: 40,
           decoration: BoxDecoration(
             color: backgroundColor,
             borderRadius: BorderRadius.circular(14.0),
