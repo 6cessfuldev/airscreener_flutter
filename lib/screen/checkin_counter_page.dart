@@ -173,7 +173,7 @@ class _CheckInCounterPageState extends State<CheckInCounterPage> {
 
   @override
   Widget build(BuildContext context) {
-    const double selectBoxHeight = 70;
+    const double selectBoxHeight = 60;
     const double bottomGap = 5;
 
     return LayoutBuilder(
@@ -199,7 +199,13 @@ class _CheckInCounterPageState extends State<CheckInCounterPage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          // Expanded(child: reloadTimeWidget()),
+          const SizedBox(
+            width: 5,
+          ),
+          Expanded(child: reloadTimeWidget()),
+          const SizedBox(
+            width: 5,
+          ),
           TerminalSelectBox(
               isLoading: _isLoading,
               reload: dataFetchAndFilter,
@@ -217,6 +223,9 @@ class _CheckInCounterPageState extends State<CheckInCounterPage> {
             width: 5,
           ),
           ReloadButton(reload: dataFetchAndFilter, isLoading: _isLoading),
+          const SizedBox(
+            width: 5,
+          ),
         ],
       ),
     );
