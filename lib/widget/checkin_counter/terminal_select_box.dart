@@ -39,7 +39,7 @@ class _TerminalSelectBoxState extends State<TerminalSelectBox> {
         child: DropdownButtonHideUnderline(
           child: DropdownButton2<String>(
             isExpanded: true,
-            hint: Row(
+            hint: const Row(
               children: [
                 Expanded(
                   child: Text(
@@ -47,7 +47,7 @@ class _TerminalSelectBoxState extends State<TerminalSelectBox> {
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
-                      color: Colors.blueGrey[200],
+                      color: fontColor,
                     ),
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -62,7 +62,7 @@ class _TerminalSelectBoxState extends State<TerminalSelectBox> {
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                          color: fontColor,
                         ),
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -117,7 +117,7 @@ class _TerminalSelectBoxState extends State<TerminalSelectBox> {
               width: 120,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(14),
-                color: Colors.blue.withOpacity(0.6),
+                color: mainBlueColor.withOpacity(0.6),
               ),
               offset: const Offset(0, 0),
               scrollbarTheme: ScrollbarThemeData(

@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 
-Color backgroundColor = Colors.grey.shade100;
-const Color accentColor = Color.fromARGB(255, 155, 213, 254);
+Color backgroundColor = darkBlueColor;
 
-const Color upsideShadowColor = Colors.white;
-Color downsideShadowColor = Colors.grey[300]!;
+const Color upsideShadowColor = mainBlueColor;
+Color downsideShadowColor = darkestBlueColor;
 
-const Color lightBlueColor = Color(0xff5FBDFF);
-const Color peachColor = Color(0xff96EFFF);
-const Color lightPinkColor = Color(0xffC5FFF8);
+const fontColor = lightestBlueColor;
+
+const Color lightestBlueColor = Color(0xffe0e1dd);
+const Color lightBlueColor = Color(0xff778da9);
+const Color mainBlueColor = Color(0xff415a77);
+const Color darkBlueColor = Color(0xff1b263b);
+const Color darkestBlueColor = Color(0xff0d1b2a);
 
 const double outsideShadowDistance = 5;
 const double insideShoadowDistance = 5;

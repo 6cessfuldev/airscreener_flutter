@@ -77,7 +77,7 @@ class _CheckInCounterSelectBoxState extends State<CheckInCounterSelectBox> {
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
-                      color: Colors.blueGrey,
+                      color: fontColor,
                     ),
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -92,7 +92,7 @@ class _CheckInCounterSelectBoxState extends State<CheckInCounterSelectBox> {
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                          color: fontColor,
                         ),
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -145,7 +145,7 @@ class _CheckInCounterSelectBoxState extends State<CheckInCounterSelectBox> {
               width: 80,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(14),
-                color: Colors.blue.withOpacity(0.6),
+                color: mainBlueColor.withOpacity(0.6),
               ),
               offset: const Offset(0, 0),
               scrollbarTheme: ScrollbarThemeData(
