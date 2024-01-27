@@ -62,10 +62,10 @@ class _MyHomePageState extends State<MyHomePage>
               });
             },
             children: [
+              const CheckInCounterPage(),
               Container(
                 color: Colors.transparent,
               ),
-              const CheckInCounterPage(),
               Container(
                 color: Colors.transparent,
               ),
@@ -89,9 +89,9 @@ class _MyHomePageState extends State<MyHomePage>
         },
         items: const [
           BottomNavigationBarItem(
-              icon: Icon(Icons.backpack_sharp), label: '휴대'),
+              icon: Icon(Icons.luggage_outlined), label: '목록'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.luggage_outlined), label: '위탁'),
+              icon: Icon(Icons.search), label: '검색'),
           BottomNavigationBarItem(icon: Icon(Icons.settings), label: '설정'),
         ],
       ),
