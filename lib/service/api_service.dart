@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
@@ -76,14 +77,13 @@ class ApiService {
   }
 
   Future<List<DepartingFlightsInfo>> getFlightsInfoSearch(
-      String flightid) async {
+      String keyword) async {
     Map<String, dynamic> todayRequest = {
       'pageNo': 1,
       'numOfRows': 4000,
       'type': 'json',
       'from_time': DateFormat('HHmm').format(DateTime.now()).toString(),
       'searchday': DateFormat('yyyyMMdd').format(DateTime.now()).toString(),
-      'flight_id': flightid
     };
 
     Map<String, dynamic> tommorowRequest = {
@@ -96,7 +96,6 @@ class ApiService {
       'searchday': DateFormat('yyyyMMdd')
           .format(DateTime.now().add(const Duration(days: 1)))
           .toString(),
-      'flight_id': flightid
     };
 
     List<Future> tasks = [];
@@ -113,6 +112,15 @@ class ApiService {
       resultList.addAll(responseList[1].items);
     }
 
+    resultList.where((info) {
+      if (info.flightId != null) {
+        return info.flightId!.contains(keyword.toUpperCase());
+      } else {
+        return false;
+      }
+    });
+
+    debugPrint('[API] getFlightsInfoSearch length : ${resultList.length}');
     return resultList;
   }
 }
