@@ -8,7 +8,7 @@ import '../model/terminalid_enum.dart';
 import '../provider/flights_info_provider.dart';
 import '../service/api_service.dart';
 import '../widget/checkin_counter/check_in_counter_select_box.dart';
-import '../widget/checkin_counter/flight_info_table.dart';
+import '../widget/common/flight_info_table.dart';
 import '../widget/checkin_counter/reload_button.dart';
 import '../widget/checkin_counter/terminal_select_box.dart';
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../model/departing_flights_list.dart';
 import '../service/api_service.dart';
-import '../widget/checkin_counter/flight_info_table.dart';
+import '../widget/common/flight_info_table.dart';
 import '../widget/search/searchbar_widget.dart';
 
 class SearchPage extends StatefulWidget {
