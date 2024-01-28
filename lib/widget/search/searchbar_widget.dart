@@ -90,20 +90,22 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
               decoration: BoxDecoration(
                 color: backgroundColor,
                 borderRadius: BorderRadius.circular(borderRadius),
-                boxShadow: [
-                  BoxShadow(
-                      offset: const Offset(
-                          outsideShadowDistance, outsideShadowDistance),
-                      color: downsideShadowColor,
-                      blurRadius: outsideShadowDistance,
-                      spreadRadius: 2),
-                  const BoxShadow(
-                      offset: Offset(
-                          -outsideShadowDistance, -outsideShadowDistance),
-                      color: upsideShadowColor,
-                      blurRadius: outsideShadowDistance,
-                      spreadRadius: 2)
-                ],
+                boxShadow: !textFieldFocus.hasFocus
+                    ? null
+                    : [
+                        BoxShadow(
+                            offset: const Offset(
+                                outsideShadowDistance, outsideShadowDistance),
+                            color: downsideShadowColor,
+                            blurRadius: outsideShadowDistance,
+                            spreadRadius: 2),
+                        const BoxShadow(
+                            offset: Offset(
+                                -outsideShadowDistance, -outsideShadowDistance),
+                            color: upsideShadowColor,
+                            blurRadius: outsideShadowDistance,
+                            spreadRadius: 2)
+                      ],
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -113,54 +115,54 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                       child: searchInputWidget(searchInputHeight,
                           searchBarWidth, submitBtnWidth, searchBarPadding)),
                   if (widget.hasInputText && textFieldFocus.hasFocus)
-                  ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: typeAheadCount,
-                    itemBuilder: (context, index) {
-                      return Container(
+                    ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: typeAheadCount,
+                      itemBuilder: (context, index) {
+                        return Container(
                             child: dataList.length > index
-                                  
-                              ? Container(
-                                  decoration: const BoxDecoration(
-                                      border: Border(
-                                          top: BorderSide(
-                                              color: Colors.white70))),
-                                  padding:
-                                      const EdgeInsetsDirectional.symmetric(
-                                          horizontal: 10),
-                                  alignment: Alignment.centerLeft,
-                                  height: typeAheadItemHeight,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        '${dataList[index].flightId}',
-                                        overflow: TextOverflow.ellipsis,
-                                        style: const TextStyle(
-                                            color: mainBlueColor,
-                                            fontSize: 17,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Text(
-                                        ' • ${dataList[index].airline}',
-                                        overflow: TextOverflow.ellipsis,
-                                        style: const TextStyle(
-                                            color: fontColor, fontSize: 17),
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                                          ' • ${dataList[index].airport}',
+                                ? Container(
+                                    decoration: const BoxDecoration(
+                                        border: Border(
+                                            top: BorderSide(
+                                                color: Colors.white70))),
+                                    padding:
+                                        const EdgeInsetsDirectional.symmetric(
+                                            horizontal: 10),
+                                    alignment: Alignment.centerLeft,
+                                    height: typeAheadItemHeight,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          '${dataList[index].flightId}',
+                                          overflow: TextOverflow.ellipsis,
+                                          style: const TextStyle(
+                                              color: mainBlueColor,
+                                              fontSize: 17,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Text(
+                                          ' • ${dataList[index].airline}',
                                           overflow: TextOverflow.ellipsis,
                                           style: const TextStyle(
                                               color: fontColor, fontSize: 17),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                )
-                              : Container());
-                    },
-                  )
+                                        Expanded(
+                                          child: Text(
+                                            ' • ${dataList[index].airport}',
+                                            overflow: TextOverflow.ellipsis,
+                                            style: const TextStyle(
+                                                color: fontColor, fontSize: 17),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                : Container());
+                      },
+                    )
                 ],
               ),
             );
@@ -189,6 +191,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                 ),
                 border: InputBorder.none,
                 hintText: '비행편 검색'),
+            onTap: () => setState(() {}),
             onChanged: (value) {
               widget.hasInputTextSetter(value != '');
             },
@@ -200,7 +203,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(9999.0),
             color: mainBlueColor,
-            boxShadow: !widget.hasInputText
+            boxShadow: !widget.hasInputText || !textFieldFocus.hasFocus
                 ? null
                 : [
                     BoxShadow(
