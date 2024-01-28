@@ -7,31 +7,25 @@ import '../../model/departing_flights_list.dart';
 import '../../provider/flights_info_provider.dart';
 
 class SearchBarWidget extends StatefulWidget {
-  const SearchBarWidget({super.key, required this.height});
+  const SearchBarWidget(
+      {super.key,
+      required this.height,
+      required this.inputController,
+      required this.hasInputText,
+      required this.hasInputTextSetter});
 
   final double height;
+  final TextEditingController inputController;
+  final bool hasInputText;
+  final Function hasInputTextSetter;
 
   @override
   State<SearchBarWidget> createState() => _SearchBarWidgetState();
 }
 
 class _SearchBarWidgetState extends State<SearchBarWidget> {
-  late TextEditingController _searchInputController;
-  bool hasInputText = false;
   List<DepartingFlightsInfo> typeAheadData = [];
   int lastDataListLenght = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    _searchInputController = TextEditingController();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _searchInputController.dispose();
-  }
 
   List<DepartingFlightsInfo> filterData(
       String input, List<DepartingFlightsInfo> dataList) {
@@ -67,10 +61,10 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
         Consumer<FlightsInfoProvider>(
           builder: (context, value, child) {
             List<DepartingFlightsInfo> dataList = value.dataList;
-            dataList = filterData(_searchInputController.text, dataList);
+            dataList = filterData(widget.inputController.text, dataList);
             return Container(
               width: searchBarWidth,
-              height: hasInputText && dataList.isNotEmpty
+              height: widget.hasInputText && dataList.isNotEmpty
                   ? searchInputHeight +
                       searchBarPadding * 2 +
                       dataList.length * typeAheadItemHeight +
@@ -106,7 +100,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                     itemCount: typeAheadCount,
                     itemBuilder: (context, index) {
                       return Container(
-                          child: hasInputText && dataList.length > index
+                          child: widget.hasInputText && dataList.length > index
                               ? Container(
                                   decoration: const BoxDecoration(
                                       border: Border(
@@ -166,7 +160,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
           height: searchInputHeight,
           width: searchBarWidth - submitBtnWidth - searchBarPadding * 2 - 1,
           child: TextField(
-            controller: _searchInputController,
+            controller: widget.inputController,
             style: const TextStyle(fontSize: 20, color: fontColor),
             decoration: const InputDecoration(
                 prefixIcon: Icon(
@@ -176,9 +170,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                 border: InputBorder.none,
                 hintText: '비행편 검색'),
             onChanged: (value) {
-              setState(() {
-                hasInputText = value != '';
-              });
+              widget.hasInputTextSetter(value != '');
             },
           ),
         ),
@@ -188,7 +180,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(9999.0),
             color: mainBlueColor,
-            boxShadow: !hasInputText
+            boxShadow: !widget.hasInputText
                 ? null
                 : [
                     BoxShadow(
