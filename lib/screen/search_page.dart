@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../common/config.dart';
 import '../common/style.dart';
 import '../model/departing_flights_list.dart';
 import '../provider/flights_info_provider.dart';
@@ -39,8 +40,6 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
   late TextEditingController _searchInputController;
   bool hasInputText = false;
   List<DepartingFlightsInfo> typeAheadData = [];
-  bool isTypeAheadVisible = false;
-  bool isTypeAheadAnimating = false;
   int lastDataListLenght = 0;
 
   @override
@@ -67,7 +66,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
       } else {
         continue;
       }
-      if (counter >= 5) break;
+      if (counter >= typeAheadCount) break;
     }
 
     return filteredList;
@@ -93,23 +92,6 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
           builder: (context, value, child) {
             List<DepartingFlightsInfo> dataList = value.dataList;
             dataList = filterData(_searchInputController.text, dataList);
-            if (hasInputText && dataList.isNotEmpty) {
-              Future.delayed(const Duration(milliseconds: 150), () {
-                if (mounted) {
-                  setState(() {
-                    isTypeAheadVisible = true;
-                  });
-                }
-              });
-            } else if (isTypeAheadVisible &&
-                (!hasInputText || dataList.isEmpty)) {
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                setState(() {
-                  isTypeAheadVisible = false;
-                });
-              });
-            }
-
             return Container(
               width: searchBarWidth,
               height: hasInputText && dataList.isNotEmpty
@@ -143,9 +125,13 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                       padding: const EdgeInsets.all(5),
                       child: searchInputWidget(searchInputHeight,
                           searchBarWidth, submitBtnWidth, searchBarPadding)),
-                  if (isTypeAheadVisible && hasInputText)
-                    ...dataList.map((info) => AnimatedContainer(
-                          duration: const Duration(seconds: 1),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: typeAheadCount,
+                    itemBuilder: (context, index) {
+                      return Container(
+                          child: hasInputText && dataList.length > index
+                              ? Container(
                           decoration: const BoxDecoration(
                               border: Border(
                                   top: BorderSide(color: Colors.white70))),
@@ -157,7 +143,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Text(
-                                '${info.flightId}',
+                                        '${dataList[index].flightId}',
                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(
                                     color: mainBlueColor,
@@ -165,26 +151,25 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                                     fontWeight: FontWeight.bold),
                               ),
                               Text(
-                                ' • ${info.airline}',
+                                        ' • ${dataList[index].airline}',
                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(
                                     color: fontColor, fontSize: 17),
                               ),
                               Expanded(
                                 child: Text(
-                                  ' • ${info.airport}',
+                                          ' • ${dataList[index].airport}',
                                   overflow: TextOverflow.ellipsis,
                                   style: const TextStyle(
                                       color: fontColor, fontSize: 17),
                                 ),
                               ),
                             ],
-                          ),
-                        )),
-                  if (isTypeAheadVisible && hasInputText && dataList.isNotEmpty)
-                    SizedBox(
-                      height: bottomGapHeigt,
-                    )
+                                  ),
+                                )
+                              : Container());
+                    },
+                  )
                 ],
               ),
             );
