@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../model/departing_flights_list.dart';
+import '../service/api_service.dart';
 import '../widget/search/searchbar_widget.dart';
 
 class SearchPage extends StatefulWidget {
@@ -11,6 +13,8 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   late TextEditingController _searchInputController;
   bool hasInputText = false;
+  final ApiService _apiService = ApiService();
+  List<DepartingFlightsInfo> searchList = [];
 
   @override
   void initState() {
@@ -36,6 +40,17 @@ class _SearchPageState extends State<SearchPage> {
     }
   }
 
+  Future<void> fetchSearchData() async {
+    List<DepartingFlightsInfo> resList =
+        await _apiService.getFlightsInfoSearch(_searchInputController.text);
+
+    if (mounted) {
+      setState(() {
+        searchList = resList;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     double outsidePadding = 10;
@@ -47,12 +62,15 @@ class _SearchPageState extends State<SearchPage> {
         children: [
           SearchResultWidget(
             topMargin: searchbarHeight,
+            searchData: searchList,
           ),
           SearchBarWidget(
-              height: searchbarHeight,
-              inputController: _searchInputController,
-              hasInputText: hasInputText,
-              hasInputTextSetter: setHasInputText),
+            height: searchbarHeight,
+            inputController: _searchInputController,
+            hasInputText: hasInputText,
+            hasInputTextSetter: setHasInputText,
+            searchCallback: fetchSearchData,
+          ),
         ],
       ),
     );
@@ -60,12 +78,11 @@ class _SearchPageState extends State<SearchPage> {
 }
 
 class SearchResultWidget extends StatefulWidget {
-  const SearchResultWidget({
-    super.key,
-    required this.topMargin,
-  });
+  const SearchResultWidget(
+      {super.key, required this.topMargin, required this.searchData});
 
   final double topMargin;
+  final List<DepartingFlightsInfo> searchData;
 
   @override
   State<SearchResultWidget> createState() => _SearchResultWidgetState();
@@ -77,7 +94,14 @@ class _SearchResultWidgetState extends State<SearchResultWidget> {
     return Container(
       margin: EdgeInsets.only(top: widget.topMargin),
       padding: const EdgeInsets.symmetric(vertical: 20),
-      child: const Text('결과 페이지'),
+        child: ListView.builder(
+          itemCount: widget.searchData.length,
+          itemBuilder: (context, index) {
+            return SizedBox(
+                height: 20,
+                child: Text(widget.searchData[index].airport ?? ''));
+          },
+        )
     );
   }
 }
