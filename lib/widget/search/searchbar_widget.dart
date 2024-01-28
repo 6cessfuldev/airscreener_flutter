@@ -7,7 +7,9 @@ import '../../model/departing_flights_list.dart';
 import '../../provider/flights_info_provider.dart';
 
 class SearchBarWidget extends StatefulWidget {
-  const SearchBarWidget({super.key});
+  const SearchBarWidget({super.key, required this.height});
+
+  final double height;
 
   @override
   State<SearchBarWidget> createState() => _SearchBarWidgetState();
@@ -62,9 +64,6 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
 
     return Column(
       children: [
-        const SizedBox(
-          height: 10,
-        ),
         Consumer<FlightsInfoProvider>(
           builder: (context, value, child) {
             List<DepartingFlightsInfo> dataList = value.dataList;

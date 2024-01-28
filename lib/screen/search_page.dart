@@ -12,14 +12,36 @@ class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     double outsidePadding = 10;
+    double searchbarHeight = 50;
 
     return Padding(
       padding: EdgeInsets.all(outsidePadding),
-      child: const Stack(
+      child: Stack(
         children: [
-          SearchBarWidget(),
+          SearchResultWidget(topMargin: searchbarHeight),
+          SearchBarWidget(height: searchbarHeight),
         ],
       ),
+    );
+  }
+}
+
+class SearchResultWidget extends StatefulWidget {
+  const SearchResultWidget({super.key, required this.topMargin});
+
+  final double topMargin;
+
+  @override
+  State<SearchResultWidget> createState() => _SearchResultWidgetState();
+}
+
+class _SearchResultWidgetState extends State<SearchResultWidget> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(top: widget.topMargin),
+      padding: const EdgeInsets.symmetric(vertical: 20),
+      child: const Text('결과 페이지'),
     );
   }
 }
