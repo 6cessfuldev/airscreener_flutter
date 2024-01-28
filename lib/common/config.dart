@@ -1,0 +1,1 @@
+const typeAheadCount = 8;
