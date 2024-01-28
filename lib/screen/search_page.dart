@@ -93,13 +93,15 @@ class _SearchResultWidgetState extends State<SearchResultWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: widget.topMargin),
-      padding: const EdgeInsets.symmetric(vertical: 20),
-        child: FlightInfoTable(
-          dataList: widget.searchData,
-          height: 500,
-          isLoading: false,
-        )
-    );
+        margin: EdgeInsets.only(top: widget.topMargin),
+        padding: const EdgeInsets.only(top: 20),
+        child: LayoutBuilder(builder: (context, constraints) {
+          double maxHeight = constraints.constrainHeight();
+          return FlightInfoTable(
+            dataList: widget.searchData,
+            height: maxHeight,
+            isLoading: false,
+          );
+        }));
   }
 }
