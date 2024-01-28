@@ -37,8 +37,6 @@ class _CheckInCounterSelectBoxState extends State<CheckInCounterSelectBox> {
     'G',
     'H1',
     'H2',
-    'I1',
-    'I2',
     'J1',
     'J2',
     'K1',
