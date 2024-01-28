@@ -74,4 +74,45 @@ class ApiService {
 
     return resultList;
   }
+
+  Future<List<DepartingFlightsInfo>> getFlightsInfoSearch(
+      String flightid) async {
+    Map<String, dynamic> todayRequest = {
+      'pageNo': 1,
+      'numOfRows': 4000,
+      'type': 'json',
+      'from_time': DateFormat('HHmm').format(DateTime.now()).toString(),
+      'searchday': DateFormat('yyyyMMdd').format(DateTime.now()).toString(),
+      'flight_id': flightid
+    };
+
+    Map<String, dynamic> tommorowRequest = {
+      'pageNo': 1,
+      'numOfRows': 2000,
+      'type': 'json',
+      'to_time': DateFormat('HHmm')
+          .format(DateTime.now().add(const Duration(hours: 24)))
+          .toString(),
+      'searchday': DateFormat('yyyyMMdd')
+          .format(DateTime.now().add(const Duration(days: 1)))
+          .toString(),
+      'flight_id': flightid
+    };
+
+    List<Future> tasks = [];
+    tasks.add(getDepartingFlightsList(todayRequest, defaultData: {}));
+    tasks.add(getDepartingFlightsList(tommorowRequest, defaultData: {}));
+
+    List responseList = await Future.wait(tasks);
+
+    List<DepartingFlightsInfo> resultList = [];
+    if (responseList[0].status == 200) {
+      resultList.addAll(responseList[0].items);
+    }
+    if (responseList[1].status == 200) {
+      resultList.addAll(responseList[1].items);
+    }
+
+    return resultList;
+  }
 }
