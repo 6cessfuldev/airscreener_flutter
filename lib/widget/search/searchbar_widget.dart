@@ -12,12 +12,14 @@ class SearchBarWidget extends StatefulWidget {
       required this.height,
       required this.inputController,
       required this.hasInputText,
-      required this.hasInputTextSetter});
+      required this.hasInputTextSetter,
+      required this.searchCallback});
 
   final double height;
   final TextEditingController inputController;
   final bool hasInputText;
   final Function hasInputTextSetter;
+  final Function searchCallback;
 
   @override
   State<SearchBarWidget> createState() => _SearchBarWidgetState();
@@ -26,6 +28,19 @@ class SearchBarWidget extends StatefulWidget {
 class _SearchBarWidgetState extends State<SearchBarWidget> {
   List<DepartingFlightsInfo> typeAheadData = [];
   int lastDataListLenght = 0;
+  late FocusNode textFieldFocus;
+
+  @override
+  void initState() {
+    super.initState();
+    textFieldFocus = FocusNode();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    textFieldFocus.dispose();
+  }
 
   List<DepartingFlightsInfo> filterData(
       String input, List<DepartingFlightsInfo> dataList) {
@@ -64,7 +79,9 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
             dataList = filterData(widget.inputController.text, dataList);
             return Container(
               width: searchBarWidth,
-              height: widget.hasInputText && dataList.isNotEmpty
+              height: widget.hasInputText &&
+                      dataList.isNotEmpty &&
+                      textFieldFocus.hasFocus
                   ? searchInputHeight +
                       searchBarPadding * 2 +
                       dataList.length * typeAheadItemHeight +
@@ -95,12 +112,14 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                       padding: const EdgeInsets.all(5),
                       child: searchInputWidget(searchInputHeight,
                           searchBarWidth, submitBtnWidth, searchBarPadding)),
+                  if (widget.hasInputText && textFieldFocus.hasFocus)
                   ListView.builder(
                     shrinkWrap: true,
                     itemCount: typeAheadCount,
                     itemBuilder: (context, index) {
                       return Container(
-                          child: widget.hasInputText && dataList.length > index
+                            child: dataList.length > index
+                                  
                               ? Container(
                                   decoration: const BoxDecoration(
                                       border: Border(
@@ -161,6 +180,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
           width: searchBarWidth - submitBtnWidth - searchBarPadding * 2 - 1,
           child: TextField(
             controller: widget.inputController,
+            focusNode: textFieldFocus,
             style: const TextStyle(fontSize: 20, color: fontColor),
             decoration: const InputDecoration(
                 prefixIcon: Icon(
@@ -200,7 +220,12 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
           child: IconButton(
             icon: const Icon(Icons.search),
             color: lightestBlueColor,
-            onPressed: () {},
+            onPressed: () {
+              if (widget.hasInputText) {
+                widget.searchCallback();
+                textFieldFocus.unfocus();
+              }
+            },
           ),
         )
       ],
