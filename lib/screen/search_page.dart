@@ -39,6 +39,9 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
   late TextEditingController _searchInputController;
   bool hasInputText = false;
   List<DepartingFlightsInfo> typeAheadData = [];
+  bool isTypeAheadVisible = false;
+  bool isTypeAheadAnimating = false;
+  int lastDataListLenght = 0;
 
   @override
   void initState() {
@@ -57,13 +60,14 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
     int counter = 0;
     List<DepartingFlightsInfo> filteredList = [];
     for (DepartingFlightsInfo info in dataList) {
-      if (info.flightId != null && info.flightId!.contains(input)) {
+      if (info.flightId != null &&
+          info.flightId!.contains(input.toUpperCase())) {
         counter++;
         filteredList.add(info);
       } else {
         continue;
       }
-      if (counter >= 10) break;
+      if (counter >= 5) break;
     }
 
     return filteredList;
@@ -76,9 +80,9 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
     double submitBtnWidth = 50;
     double searchBarPadding = 5;
     double searchInputHeight = 50;
-    double typeAheadItemHeight = 20;
+    double typeAheadItemHeight = 50;
     double borderRadius = 20.0;
-    double bottomGapHeigt = borderRadius;
+    double bottomGapHeigt = 0;
 
     return Column(
       children: [
@@ -89,6 +93,22 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
           builder: (context, value, child) {
             List<DepartingFlightsInfo> dataList = value.dataList;
             dataList = filterData(_searchInputController.text, dataList);
+            if (hasInputText && dataList.isNotEmpty) {
+              Future.delayed(const Duration(milliseconds: 150), () {
+                if (mounted) {
+                  setState(() {
+                    isTypeAheadVisible = true;
+                  });
+                }
+              });
+            } else if (isTypeAheadVisible &&
+                (!hasInputText || dataList.isEmpty)) {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                setState(() {
+                  isTypeAheadVisible = false;
+                });
+              });
+            }
 
             return Container(
               width: searchBarWidth,
@@ -123,12 +143,45 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                       padding: const EdgeInsets.all(5),
                       child: searchInputWidget(searchInputHeight,
                           searchBarWidth, submitBtnWidth, searchBarPadding)),
-                  if (hasInputText)
-                    ...dataList.map((e) => Container(
+                  if (isTypeAheadVisible && hasInputText)
+                    ...dataList.map((info) => AnimatedContainer(
+                          duration: const Duration(seconds: 1),
+                          decoration: const BoxDecoration(
+                              border: Border(
+                                  top: BorderSide(color: Colors.white70))),
+                          padding: const EdgeInsetsDirectional.symmetric(
+                              horizontal: 10),
+                          alignment: Alignment.centerLeft,
                           height: typeAheadItemHeight,
-                          color: Colors.white,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                '${info.flightId}',
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                    color: mainBlueColor,
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                ' • ${info.airline}',
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                    color: fontColor, fontSize: 17),
+                              ),
+                              Expanded(
+                                child: Text(
+                                  ' • ${info.airport}',
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                      color: fontColor, fontSize: 17),
+                                ),
+                              ),
+                            ],
+                          ),
                         )),
-                  if (hasInputText && dataList.isNotEmpty)
+                  if (isTypeAheadVisible && hasInputText && dataList.isNotEmpty)
                     SizedBox(
                       height: bottomGapHeigt,
                     )
