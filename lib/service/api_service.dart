@@ -112,15 +112,16 @@ class ApiService {
       resultList.addAll(responseList[1].items);
     }
 
-    resultList.where((info) {
+    resultList = resultList.where((info) {
       if (info.flightId != null) {
         return info.flightId!.contains(keyword.toUpperCase());
       } else {
         return false;
       }
-    });
+    }).toList();
 
-    debugPrint('[API] getFlightsInfoSearch length : ${resultList.length}');
+    debugPrint(
+        '[API] getFlightsInfoSearch length : ${resultList.length} keyword : $keyword');
     return resultList;
   }
 }
