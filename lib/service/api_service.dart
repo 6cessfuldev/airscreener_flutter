@@ -70,6 +70,23 @@ class ApiService {
       {DateTime? from, DateTime? to}) async {
     from ??= DateTime.now().subtract(const Duration(days: 1));
     to ??= DateTime.now().add(const Duration(days: 1));
+
+    List<Map<String, dynamic>> requestList = makeRequestList(from, to);
+
+    List<Future> tasks = [];
+    tasks = requestList.map((e) {
+      return getDepartingFlightsList(e, defaultData: {});
+    }).toList();
+
+    List responseList = await Future.wait(tasks);
+
+    List<DepartingFlightsInfo> resultList = [];
+
+    resultList = responseList
+        .where((e) => e.status == 200)
+        .expand<DepartingFlightsInfo>((e) => e.items)
+        .toList();
+    return resultList;
   }
 
   Future<List<DepartingFlightsInfo>> getFlightsInfoByTime(
@@ -80,7 +97,6 @@ class ApiService {
 
     List<Future> tasks = [];
     tasks = requestList.map((e) {
-      debugPrint("in map");
       return getDepartingFlightsList(e, defaultData: {});
     }).toList();
 
