@@ -30,10 +30,12 @@ class ApiService {
         return DepartingFlightsList.fromJson(
             {'status': 200, "items": jsonData['response']['body']['items']});
       } else {
+        debugPrint("[API] error ... status : ${response.statusCode} ");
         return DepartingFlightsList.fromJson(
             {'status': response.statusCode, "items": []});
       }
     } on Exception catch (_) {
+      debugPrint("[API] error ... request : $request");
       return DepartingFlightsList.fromJson({'status': 404, "items": []});
     }
   }
@@ -66,19 +68,19 @@ class ApiService {
     }
 
     List<Future> tasks = [];
-    requestList
-        .map((e) => tasks.add(getDepartingFlightsList(e, defaultData: {})));
+    tasks = requestList.map((e) {
+      debugPrint("in map");
+      return getDepartingFlightsList(e, defaultData: {});
+    }).toList();
 
     List responseList = await Future.wait(tasks);
 
     List<DepartingFlightsInfo> resultList = [];
 
-    responseList.map((e) {
-      if (e.status == 200) {
-        resultList.addAll(e.items);
-      }
-    });
-
+    resultList = responseList
+        .where((e) => e.status == 200)
+        .expand<DepartingFlightsInfo>((e) => e.items)
+        .toList(); 
     return resultList;
   }
 
