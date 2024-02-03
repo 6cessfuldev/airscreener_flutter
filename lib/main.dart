@@ -72,7 +72,6 @@ class _MyHomePageState extends State<MyHomePage>
         child: PageView(
             physics: const NeverScrollableScrollPhysics(),
             controller: _pageController,
-            allowImplicitScrolling: true,
             onPageChanged: (index) {
               setState(() {
                 _selectedIndex = index;
