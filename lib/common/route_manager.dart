@@ -16,7 +16,7 @@ class RouteManager {
         FlightInfoDetailArgument argument = args as FlightInfoDetailArgument;
         return MaterialPageRoute(
             builder: (context) => FlightInfoDetailPage(
-                  flightid: argument.flightId,
+                  flightId: argument.flightId,
                   scheduleDateTime: argument.scheduleDateTime,
                   estimatedDateTime: argument.estimatedDateTime,
                 ));
