@@ -91,7 +91,9 @@ class ApiService {
 
   Future<List<DepartingFlightsInfo>> getFlightsInfoSearch(
       String keyword) async {
-    List<DepartingFlightsInfo> resultList = await getFlightsInfoToTomorrow();
+    List<DepartingFlightsInfo> resultList = await getFlightsInfo(
+        DateTime.now().subtract(const Duration(days: 1)),
+        DateTime.now().add(const Duration(days: 1)));
 
     resultList = resultList.where((info) {
       if (info.flightId != null) {
