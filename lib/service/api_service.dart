@@ -41,7 +41,6 @@ class ApiService {
   }
 
 
-
   Future<List<DepartingFlightsInfo>> getFlightsInfoByTime(
       DateTime from, DateTime to) async {
     if (from.isAfter(to)) return [];
@@ -82,18 +81,18 @@ class ApiService {
     resultList = responseList
         .where((e) => e.status == 200)
         .expand<DepartingFlightsInfo>((e) => e.items)
-        .toList(); 
+        .toList();
     return resultList;
   }
 
   Future<List<DepartingFlightsInfo>> getFlightsInfoToTomorrow() async {
-    return await getFlightsInfo(
+    return await getFlightsInfoByTime(
         DateTime.now(), DateTime.now().add(const Duration(days: 1)));
   }
 
   Future<List<DepartingFlightsInfo>> getFlightsInfoSearch(
       String keyword) async {
-    List<DepartingFlightsInfo> resultList = await getFlightsInfo(
+    List<DepartingFlightsInfo> resultList = await getFlightsInfoByTime(
         DateTime.now().subtract(const Duration(days: 1)),
         DateTime.now().add(const Duration(days: 1)));
 
