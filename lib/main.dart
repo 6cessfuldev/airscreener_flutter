@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
+import 'common/route_manager.dart';
 import 'common/style.dart';
 import 'provider/flights_info_provider.dart';
 import 'screen/checkin_counter_page.dart';
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
+      onGenerateRoute: RouteManager.generateRoute,
       home: MyHomePage(title: 'Air Screener'),
     );
   }
