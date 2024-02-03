@@ -79,9 +79,6 @@ class ApiService {
 
   Future<List<DepartingFlightsInfo>> getFlightsInfoByFlightId(String flightId,
       {DateTime? from, DateTime? to}) async {
-    from ??= DateTime.now().subtract(const Duration(days: 1));
-    to ??= DateTime.now().add(const Duration(days: 1));
-
     List<Map<String, dynamic>> requestList =
         makeRequestList(from, to, flightId: flightId);
 
