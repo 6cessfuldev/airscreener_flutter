@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../screen/flight_info_detail_page.dart';
+import 'arguments.dart';
 
 class RouteManager {
   static const String homePage = '/';
@@ -12,9 +13,12 @@ class RouteManager {
 
     switch (settings.name) {
       case 'FlightInfoDetailPage':
+        FlightInfoDetailArgument argument = args as FlightInfoDetailArgument;
         return MaterialPageRoute(
             builder: (context) => FlightInfoDetailPage(
-                  flightid: args as String,
+                  flightid: argument.flightId,
+                  scheduleDateTime: argument.scheduleDateTime,
+                  estimatedDateTime: argument.estimatedDateTime,
                 ));
       default:
         throw const FormatException(
