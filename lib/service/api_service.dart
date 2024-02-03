@@ -38,79 +38,58 @@ class ApiService {
     }
   }
 
-  Future<List<DepartingFlightsInfo>> getFlightsInfoToTomorrow() async {
-    Map<String, dynamic> todayRequest = {
-      'pageNo': 1,
-      'numOfRows': 4000,
-      'type': 'json',
-      'from_time': DateFormat('HHmm').format(DateTime.now()).toString(),
-      'searchday': DateFormat('yyyyMMdd').format(DateTime.now()).toString()
-    };
+  Future<List<DepartingFlightsInfo>> getFlightsInfo(
+      DateTime from, DateTime to) async {
+    if (from.isAfter(to)) return [];
 
-    Map<String, dynamic> tommorowRequest = {
-      'pageNo': 1,
-      'numOfRows': 2000,
-      'type': 'json',
-      'to_time': DateFormat('HHmm')
-          .format(DateTime.now().add(const Duration(hours: 24)))
-          .toString(),
-      'searchday': DateFormat('yyyyMMdd')
-          .format(DateTime.now().add(const Duration(days: 1)))
-          .toString()
-    };
+    List<Map<String, dynamic>> requestList = [];
+    for (var i = 0; i < to.day - from.day + 1; i++) {
+      Map<String, dynamic> request = {
+        'pageNo': 1,
+        'numOfRows': 4000,
+        'type': 'json',
+        'searchday': DateFormat('yyyyMMdd')
+            .format(from.add(Duration(days: i)))
+            .toString()
+      };
+      if (i == 0) {
+        request
+            .addAll({'from_time': DateFormat('HHmm').format(from).toString()});
+      } else if (i == to.day - from.day) {
+        request.addAll({
+          'to_time': DateFormat('HHmm')
+              .format(DateTime.now().add(const Duration(hours: 24)))
+              .toString()
+        });
+      }
+      requestList.add(request);
+    }
 
     List<Future> tasks = [];
-    tasks.add(getDepartingFlightsList(todayRequest, defaultData: {}));
-    tasks.add(getDepartingFlightsList(tommorowRequest, defaultData: {}));
+    requestList
+        .map((e) => tasks.add(getDepartingFlightsList(e, defaultData: {})));
 
     List responseList = await Future.wait(tasks);
 
     List<DepartingFlightsInfo> resultList = [];
-    if (responseList[0].status == 200) {
-      resultList.addAll(responseList[0].items);
-    }
-    if (responseList[1].status == 200) {
-      resultList.addAll(responseList[1].items);
-    }
+
+    responseList.map((e) {
+      if (e.status == 200) {
+        resultList.addAll(e.items);
+      }
+    });
 
     return resultList;
   }
 
+  Future<List<DepartingFlightsInfo>> getFlightsInfoToTomorrow() async {
+    return await getFlightsInfo(
+        DateTime.now(), DateTime.now().add(const Duration(days: 1)));
+  }
+
   Future<List<DepartingFlightsInfo>> getFlightsInfoSearch(
       String keyword) async {
-    Map<String, dynamic> todayRequest = {
-      'pageNo': 1,
-      'numOfRows': 4000,
-      'type': 'json',
-      'from_time': DateFormat('HHmm').format(DateTime.now()).toString(),
-      'searchday': DateFormat('yyyyMMdd').format(DateTime.now()).toString(),
-    };
-
-    Map<String, dynamic> tommorowRequest = {
-      'pageNo': 1,
-      'numOfRows': 2000,
-      'type': 'json',
-      'to_time': DateFormat('HHmm')
-          .format(DateTime.now().add(const Duration(hours: 24)))
-          .toString(),
-      'searchday': DateFormat('yyyyMMdd')
-          .format(DateTime.now().add(const Duration(days: 1)))
-          .toString(),
-    };
-
-    List<Future> tasks = [];
-    tasks.add(getDepartingFlightsList(todayRequest, defaultData: {}));
-    tasks.add(getDepartingFlightsList(tommorowRequest, defaultData: {}));
-
-    List responseList = await Future.wait(tasks);
-
-    List<DepartingFlightsInfo> resultList = [];
-    if (responseList[0].status == 200) {
-      resultList.addAll(responseList[0].items);
-    }
-    if (responseList[1].status == 200) {
-      resultList.addAll(responseList[1].items);
-    }
+    List<DepartingFlightsInfo> resultList = await getFlightsInfoToTomorrow();
 
     resultList = resultList.where((info) {
       if (info.flightId != null) {
