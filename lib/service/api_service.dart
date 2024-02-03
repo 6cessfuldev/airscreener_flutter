@@ -40,11 +40,7 @@ class ApiService {
     }
   }
 
-
-  Future<List<DepartingFlightsInfo>> getFlightsInfoByTime(
-      DateTime from, DateTime to) async {
-    if (from.isAfter(to)) return [];
-
+  List<Map<String, dynamic>> makeRequestList(DateTime from, DateTime to) {
     List<Map<String, dynamic>> requestList = [];
     for (var i = 0; i < to.day - from.day + 1; i++) {
       Map<String, dynamic> request = {
@@ -67,6 +63,20 @@ class ApiService {
       }
       requestList.add(request);
     }
+    return requestList;
+  }
+
+  Future<List<DepartingFlightsInfo>> getFlightsInfoByFlightId(String flightId,
+      {DateTime? from, DateTime? to}) async {
+    from ??= DateTime.now().subtract(const Duration(days: 1));
+    to ??= DateTime.now().add(const Duration(days: 1));
+  }
+
+  Future<List<DepartingFlightsInfo>> getFlightsInfoByTime(
+      DateTime from, DateTime to) async {
+    if (from.isAfter(to)) return [];
+
+    List<Map<String, dynamic>> requestList = makeRequestList(from, to);
 
     List<Future> tasks = [];
     tasks = requestList.map((e) {
