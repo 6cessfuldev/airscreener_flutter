@@ -82,7 +82,8 @@ class ApiService {
     from ??= DateTime.now().subtract(const Duration(days: 1));
     to ??= DateTime.now().add(const Duration(days: 1));
 
-    List<Map<String, dynamic>> requestList = makeRequestList(from, to);
+    List<Map<String, dynamic>> requestList =
+        makeRequestList(from, to, flightId: flightId);
 
     List<Future> tasks = [];
     tasks = requestList.map((e) {
