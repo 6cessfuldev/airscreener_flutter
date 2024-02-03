@@ -64,6 +64,16 @@ class ApiService {
 
         requestList.add(request);
       }
+    } else if (from != null && to == null) {
+      Map<String, dynamic> request = {
+        'pageNo': 1,
+        'numOfRows': 4000,
+        'type': 'json',
+        'from_time': DateFormat('HHmm').format(from).toString(),
+        'searchday': DateFormat('yyyyMMdd').format(from).toString()
+      };
+      if (flightId != null) request['filght_id'] = flightId;
+      requestList.add(request);
     } else {
       Map<String, dynamic> request = {
         'pageNo': 1,
