@@ -75,8 +75,12 @@ class _FlightInfoTableState extends State<FlightInfoTable> {
               ],
             )),
             InkWell(
-              onTap: () =>
-                  Navigator.of(context).pushNamed('FlightInfoDetailPage'),
+              onTap: () {
+                if (info.flightId != null) {
+                  Navigator.of(context).pushNamed('FlightInfoDetailPage',
+                      arguments: info.flightId!);
+                }
+              },
               child: Center(
                   child: Column(
                 children: [
