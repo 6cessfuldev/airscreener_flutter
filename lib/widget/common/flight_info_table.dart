@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../common/arguments.dart';
 import '../../common/style.dart';
 import '../../model/departing_flights_list.dart';
 
@@ -76,9 +77,12 @@ class _FlightInfoTableState extends State<FlightInfoTable> {
             )),
             InkWell(
               onTap: () {
-                if (info.flightId != null) {
+                if (info.flightId != null && info.scheduleDateTime != null) {
                   Navigator.of(context).pushNamed('FlightInfoDetailPage',
-                      arguments: info.flightId!);
+                      arguments: FlightInfoDetailArgument(
+                          flightId: info.flightId!,
+                          scheduleDateTime: info.scheduleDateTime!,
+                          estimatedDateTime: info.estimatedDateTime));
                 }
               },
               child: Center(
