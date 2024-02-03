@@ -74,22 +74,26 @@ class _FlightInfoTableState extends State<FlightInfoTable> {
                   ),
               ],
             )),
-            Center(
-                child: Column(
-              children: [
-                Text(
-                  info.flightId ?? '',
-                  style: const TextStyle(color: darkestBlueColor),
-                  textAlign: TextAlign.center,
-                ),
-                if (info.remark != null && info.remark != "")
+            InkWell(
+              onTap: () =>
+                  Navigator.of(context).pushNamed('FlightInfoDetailPage'),
+              child: Center(
+                  child: Column(
+                children: [
                   Text(
-                    info.remark!,
+                    info.flightId ?? '',
                     style: const TextStyle(color: darkestBlueColor),
                     textAlign: TextAlign.center,
                   ),
-              ],
-            )),
+                  if (info.remark != null && info.remark != "")
+                    Text(
+                      info.remark!,
+                      style: const TextStyle(color: darkestBlueColor),
+                      textAlign: TextAlign.center,
+                    ),
+                ],
+              )),
+            ),
             SizedBox(
               height: 48,
               child: Center(
