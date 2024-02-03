@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../common/style.dart';
 import '../model/departing_flights_list.dart';
 import '../service/api_service.dart';
 
@@ -55,6 +56,14 @@ class _FlightInfoDetailPageState extends State<FlightInfoDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('항공편 상세',
+            style:
+                TextStyle(color: mainBlueColor, fontWeight: FontWeight.w600)),
+        actions: [
+          IconButton(onPressed: dataFetch, icon: const Icon(Icons.refresh))
+        ],
+      ),
       body: SizedBox(
         height: 400,
         child: Column(
