@@ -40,7 +40,9 @@ class ApiService {
     }
   }
 
-  Future<List<DepartingFlightsInfo>> getFlightsInfo(
+
+
+  Future<List<DepartingFlightsInfo>> getFlightsInfoByTime(
       DateTime from, DateTime to) async {
     if (from.isAfter(to)) return [];
 
