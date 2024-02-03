@@ -40,27 +40,38 @@ class ApiService {
     }
   }
 
-  List<Map<String, dynamic>> makeRequestList(DateTime from, DateTime to) {
+  List<Map<String, dynamic>> makeRequestList(DateTime? from, DateTime? to,
+      {String? flightId}) {
     List<Map<String, dynamic>> requestList = [];
-    for (var i = 0; i < to.day - from.day + 1; i++) {
+    if (from != null && to != null) {
+      for (var i = 0; i < to.day - from.day + 1; i++) {
+        Map<String, dynamic> request = {
+          'pageNo': 1,
+          'numOfRows': 4000,
+          'type': 'json',
+          'searchday': DateFormat('yyyyMMdd')
+              .format(from.add(Duration(days: i)))
+              .toString()
+        };
+        if (i == 0) {
+          request['from_time'] = DateFormat('HHmm').format(from).toString();
+        } else if (i == to.day - from.day) {
+          request['to_time'] = DateFormat('HHmm')
+              .format(DateTime.now().add(const Duration(hours: 24)))
+              .toString();
+        }
+        if (flightId != null) request['filght_id'] = flightId;
+
+        requestList.add(request);
+      }
+    } else {
       Map<String, dynamic> request = {
         'pageNo': 1,
         'numOfRows': 4000,
         'type': 'json',
-        'searchday': DateFormat('yyyyMMdd')
-            .format(from.add(Duration(days: i)))
-            .toString()
+        'searchday': DateFormat('yyyyMMdd').format(DateTime.now()).toString()
       };
-      if (i == 0) {
-        request
-            .addAll({'from_time': DateFormat('HHmm').format(from).toString()});
-      } else if (i == to.day - from.day) {
-        request.addAll({
-          'to_time': DateFormat('HHmm')
-              .format(DateTime.now().add(const Duration(hours: 24)))
-              .toString()
-        });
-      }
+      if (flightId != null) request['filght_id'] = flightId;
       requestList.add(request);
     }
     return requestList;
