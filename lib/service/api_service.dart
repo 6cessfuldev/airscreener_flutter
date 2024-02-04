@@ -60,7 +60,7 @@ class ApiService {
               .format(DateTime.now().add(const Duration(hours: 24)))
               .toString();
         }
-        if (flightId != null) request['filght_id'] = flightId;
+        if (flightId != null) request['flight_id'] = flightId;
 
         requestList.add(request);
       }
