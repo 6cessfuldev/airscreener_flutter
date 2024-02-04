@@ -17,6 +17,7 @@ class ApiService {
   Future<DepartingFlightsList> getDepartingFlightsList(
       Map<String, dynamic> request,
       {defaultData = false}) async {
+    debugPrint('[API] request : $request');
     String path = _departingFlightsListPath;
     request['serviceKey'] = _departingFlightsListKey;
     try {
@@ -72,7 +73,7 @@ class ApiService {
         'from_time': DateFormat('HHmm').format(from).toString(),
         'searchday': DateFormat('yyyyMMdd').format(from).toString()
       };
-      if (flightId != null) request['filght_id'] = flightId;
+      if (flightId != null) request['flight_id'] = flightId;
       requestList.add(request);
     } else {
       Map<String, dynamic> request = {
@@ -81,7 +82,7 @@ class ApiService {
         'type': 'json',
         'searchday': DateFormat('yyyyMMdd').format(DateTime.now()).toString()
       };
-      if (flightId != null) request['filght_id'] = flightId;
+      if (flightId != null) request['flight_id'] = flightId;
       requestList.add(request);
     }
     return requestList;
