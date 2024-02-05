@@ -42,17 +42,18 @@ class ApiService {
   }
 
   List<Map<String, dynamic>> makeRequestList(DateTime? from, DateTime? to,
-      {String? flightId}) {
+      {String? flightId, int? length, String timetype = 'E'}) {
     List<Map<String, dynamic>> requestList = [];
     if (from != null && to != null) {
       for (var i = 0; i < to.day - from.day + 1; i++) {
         Map<String, dynamic> request = {
           'pageNo': 1,
-          'numOfRows': 4000,
+          'numOfRows': length ?? 4000,
           'type': 'json',
           'searchday': DateFormat('yyyyMMdd')
               .format(from.add(Duration(days: i)))
-              .toString()
+              .toString(),
+          'inqtimechcd': timetype
         };
         if (i == 0) {
           request['from_time'] = DateFormat('HHmm').format(from).toString();
@@ -68,19 +69,21 @@ class ApiService {
     } else if (from != null && to == null) {
       Map<String, dynamic> request = {
         'pageNo': 1,
-        'numOfRows': 4000,
+        'numOfRows': length ?? 4000,
         'type': 'json',
         'from_time': DateFormat('HHmm').format(from).toString(),
-        'searchday': DateFormat('yyyyMMdd').format(from).toString()
+        'searchday': DateFormat('yyyyMMdd').format(from).toString(),
+        'inqtimechcd': timetype
       };
       if (flightId != null) request['flight_id'] = flightId;
       requestList.add(request);
     } else {
       Map<String, dynamic> request = {
         'pageNo': 1,
-        'numOfRows': 4000,
+        'numOfRows': length ?? 4000,
         'type': 'json',
-        'searchday': DateFormat('yyyyMMdd').format(DateTime.now()).toString()
+        'searchday': DateFormat('yyyyMMdd').format(DateTime.now()).toString(),
+        'inqtimechcd': timetype
       };
       if (flightId != null) request['flight_id'] = flightId;
       requestList.add(request);
@@ -89,9 +92,13 @@ class ApiService {
   }
 
   Future<List<DepartingFlightsInfo>> getFlightsInfoByFlightId(String flightId,
-      {DateTime? from, DateTime? to}) async {
+      {DateTime? from,
+      DateTime? to,
+      int? length,
+      String timeType = 'S'}) async {
     List<Map<String, dynamic>> requestList =
-        makeRequestList(from, to, flightId: flightId);
+        makeRequestList(from, to,
+        flightId: flightId, length: length, timetype: timeType);
 
     List<Future> tasks = [];
     tasks = requestList.map((e) {

@@ -40,7 +40,7 @@ class _FlightInfoDetailPageState extends State<FlightInfoDetailPage> {
     }
     List<DepartingFlightsInfo> dataList = await ApiService()
         .getFlightsInfoByFlightId(widget.flightId,
-            from: convertStringToDate(widget.scheduleDateTime));
+            from: convertStringToDate(widget.scheduleDateTime), length: 1);
 
     if (mounted) {
       setState(() {
@@ -54,7 +54,9 @@ class _FlightInfoDetailPageState extends State<FlightInfoDetailPage> {
   DateTime? convertStringToDate(String strDate) {
     try {
       String yyyyMMdd = strDate.substring(0, 8);
-      return DateTime.parse(yyyyMMdd);
+      return DateTime.parse(yyyyMMdd)
+          .add(Duration(hours: int.parse(strDate.substring(8, 10))))
+          .add(Duration(minutes: int.parse(strDate.substring(10, 12))));
     } catch (e) {
       debugPrint('Failed DateFormat parsing');
       return null;
