@@ -50,14 +50,11 @@ class _FlightInfoDetailPageState extends State<FlightInfoDetailPage> {
     }
   }
 
+  /// 0시 0분부터 검색
   DateTime? convertStringToDate(String strDate) {
     try {
       String yyyyMMdd = strDate.substring(0, 8);
-      int hour = int.parse(strDate.substring(8, 10));
-      int minute = int.parse(strDate.substring(10, 12));
-      return DateTime.parse(yyyyMMdd)
-          .add(Duration(hours: hour))
-          .add(Duration(minutes: minute));
+      return DateTime.parse(yyyyMMdd);
     } catch (e) {
       debugPrint('Failed DateFormat parsing');
       return null;
