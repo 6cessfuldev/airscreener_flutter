@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../common/arguments.dart';
 import '../../common/config.dart';
 import '../../common/style.dart';
 import '../../model/departing_flights_list.dart';
@@ -119,48 +120,64 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                       shrinkWrap: true,
                       itemCount: typeAheadCount,
                       itemBuilder: (context, index) {
-                        return Container(
-                            child: dataList.length > index
-                                ? Container(
-                                    decoration: const BoxDecoration(
-                                        border: Border(
-                                            top: BorderSide(
-                                                color: Colors.white70))),
-                                    padding:
-                                        const EdgeInsetsDirectional.symmetric(
-                                            horizontal: 10),
-                                    alignment: Alignment.centerLeft,
-                                    height: typeAheadItemHeight,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          '${dataList[index].flightId}',
-                                          overflow: TextOverflow.ellipsis,
-                                          style: const TextStyle(
-                                              color: mainBlueColor,
-                                              fontSize: 17,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        Text(
-                                          ' • ${dataList[index].airline}',
-                                          overflow: TextOverflow.ellipsis,
-                                          style: const TextStyle(
-                                              color: fontColor, fontSize: 17),
-                                        ),
-                                        Expanded(
-                                          child: Text(
-                                            ' • ${dataList[index].airport}',
+                        return InkWell(
+                          onTap: () {
+                            if (dataList[index].flightId != null &&
+                                dataList[index].scheduleDateTime != null) {
+                              Navigator.of(context).pushNamed(
+                                  'FlightInfoDetailPage',
+                                  arguments: FlightInfoDetailArgument(
+                                      flightId: dataList[index].flightId!,
+                                      scheduleDateTime:
+                                          dataList[index].scheduleDateTime!,
+                                      estimatedDateTime:
+                                          dataList[index].estimatedDateTime));
+                            }
+                          },
+                          child: Container(
+                              child: dataList.length > index
+                                  ? Container(
+                                      decoration: const BoxDecoration(
+                                          border: Border(
+                                              top: BorderSide(
+                                                  color: Colors.white70))),
+                                      padding:
+                                          const EdgeInsetsDirectional.symmetric(
+                                              horizontal: 10),
+                                      alignment: Alignment.centerLeft,
+                                      height: typeAheadItemHeight,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            '${dataList[index].flightId}',
+                                            overflow: TextOverflow.ellipsis,
+                                            style: const TextStyle(
+                                                color: mainBlueColor,
+                                                fontSize: 17,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          Text(
+                                            ' • ${dataList[index].airline}',
                                             overflow: TextOverflow.ellipsis,
                                             style: const TextStyle(
                                                 color: fontColor, fontSize: 17),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  )
-                                : Container());
+                                          Expanded(
+                                            child: Text(
+                                              ' • ${dataList[index].airport}',
+                                              overflow: TextOverflow.ellipsis,
+                                              style: const TextStyle(
+                                                  color: fontColor,
+                                                  fontSize: 17),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  : Container()),
+                        );
                       },
                     )
                 ],
