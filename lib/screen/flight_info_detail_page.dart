@@ -198,11 +198,13 @@ class _FlightInfoDetailPageState extends State<FlightInfoDetailPage> {
                                         style: TextStyle(
                                             color: Colors.white,
                                             decoration:
-                                                data?.estimatedDateTime != null
+                                                data?.scheduleDateTime !=
+                                                        data?.estimatedDateTime
                                                     ? TextDecoration.lineThrough
                                                     : null),
                                       ),
-                                      if (data?.estimatedDateTime != null)
+                                      if (data?.scheduleDateTime !=
+                                          data?.estimatedDateTime)
                                         Text(
                                           ' -> ${formatHHmmDate(data?.estimatedDateTime)}',
                                           style: const TextStyle(
