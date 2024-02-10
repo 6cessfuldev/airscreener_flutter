@@ -13,6 +13,14 @@ class ApiService {
 
   final String _departingFlightsListKey = dotenv.env['PassengerFlightsDeOdp']!;
 
+  Future ajaxGet(String path, Map<String, dynamic> request) async {
+    return await http.get(
+      Uri.parse(path).replace(
+          queryParameters: request.map((key, value) =>
+              MapEntry<String, dynamic>(key.toString(), value.toString()))),
+    );
+  }
+
   //인천국제공항공사_여객기 운항 현황 상세 조회 서비스(출발)
   Future<DepartingFlightsList> getDepartingFlightsList(
       Map<String, dynamic> request,
@@ -20,12 +28,9 @@ class ApiService {
     debugPrint('[API] request : $request');
     String path = _departingFlightsListPath;
     request['serviceKey'] = _departingFlightsListKey;
+
     try {
-      var response = await http.get(
-        Uri.parse(path).replace(
-            queryParameters: request.map((key, value) =>
-                MapEntry<String, dynamic>(key.toString(), value.toString()))),
-      );
+      var response = await ajaxGet(path, request);
       if (response.statusCode == 200) {
         var jsonData = json.decode(response.body);
         return DepartingFlightsList.fromJson(
@@ -96,8 +101,7 @@ class ApiService {
       DateTime? to,
       int? length,
       String timeType = 'S'}) async {
-    List<Map<String, dynamic>> requestList =
-        makeRequestList(from, to,
+    List<Map<String, dynamic>> requestList = makeRequestList(from, to,
         flightId: flightId, length: length, timetype: timeType);
 
     List<Future> tasks = [];
