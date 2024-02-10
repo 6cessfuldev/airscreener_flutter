@@ -5,6 +5,7 @@ import 'common/route_manager.dart';
 import 'common/style.dart';
 import 'provider/flights_info_provider.dart';
 import 'screen/checkin_counter_page.dart';
+import 'screen/passenger_notice_page.dart';
 import 'screen/search_page.dart';
 import 'service/preferences_service.dart';
 
@@ -77,12 +78,10 @@ class _MyHomePageState extends State<MyHomePage>
                 _selectedIndex = index;
               });
             },
-            children: [
-              const CheckInCounterPage(),
-              const SearchPage(),
-              Container(
-                color: Colors.transparent,
-              ),
+            children: const [
+              CheckInCounterPage(),
+              SearchPage(),
+              PassengerNoticePage(),
             ]),
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -107,7 +106,8 @@ class _MyHomePageState extends State<MyHomePage>
               icon: Icon(Icons.luggage_outlined), label: '목록'),
           BottomNavigationBarItem(
               icon: Icon(Icons.search), label: '검색'),
-          BottomNavigationBarItem(icon: Icon(Icons.settings), label: '설정'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.co_present_outlined), label: '승객 예고'),
         ],
       ),
     );
