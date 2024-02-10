@@ -46,7 +46,8 @@ class ApiService {
     }
   }
 
-  List<Map<String, dynamic>> makeRequestList(DateTime? from, DateTime? to,
+  List<Map<String, dynamic>> makeFlightInfoRequestList(
+      DateTime? from, DateTime? to,
       {String? flightId, int? length, String timetype = 'E'}) {
     List<Map<String, dynamic>> requestList = [];
     if (from != null && to != null) {
@@ -101,7 +102,7 @@ class ApiService {
       DateTime? to,
       int? length,
       String timeType = 'S'}) async {
-    List<Map<String, dynamic>> requestList = makeRequestList(from, to,
+    List<Map<String, dynamic>> requestList = makeFlightInfoRequestList(from, to,
         flightId: flightId, length: length, timetype: timeType);
 
     List<Future> tasks = [];
@@ -124,7 +125,8 @@ class ApiService {
       DateTime from, DateTime to) async {
     if (from.isAfter(to)) return [];
 
-    List<Map<String, dynamic>> requestList = makeRequestList(from, to);
+    List<Map<String, dynamic>> requestList =
+        makeFlightInfoRequestList(from, to);
 
     List<Future> tasks = [];
     tasks = requestList.map((e) {
