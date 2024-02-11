@@ -79,9 +79,9 @@ class _MyHomePageState extends State<MyHomePage>
               });
             },
             children: const [
+              PassengerNoticePage(),
               CheckInCounterPage(),
               SearchPage(),
-              PassengerNoticePage(),
             ]),
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -103,11 +103,11 @@ class _MyHomePageState extends State<MyHomePage>
         },
         items: const [
           BottomNavigationBarItem(
+              icon: Icon(Icons.co_present_outlined), label: '승객 예고'),
+          BottomNavigationBarItem(
               icon: Icon(Icons.luggage_outlined), label: '목록'),
           BottomNavigationBarItem(
               icon: Icon(Icons.search), label: '검색'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.co_present_outlined), label: '승객 예고'),
         ],
       ),
     );
