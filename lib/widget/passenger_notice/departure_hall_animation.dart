@@ -3,7 +3,11 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 class DepartureHallAnimation extends StatefulWidget {
-  const DepartureHallAnimation({super.key});
+  const DepartureHallAnimation(
+      {super.key, required this.isLoading, this.passengerCnt});
+
+  final bool isLoading;
+  final String? passengerCnt;
 
   @override
   State<DepartureHallAnimation> createState() => _DepartureHallAnimationState();
@@ -73,6 +77,9 @@ class _DepartureHallAnimationState extends State<DepartureHallAnimation>
     double stackWidth = MediaQuery.of(context).size.width;
     double characterHeight = 120;
     double characterWidth = 120;
+
+    double? passengerCnt =
+        widget.passengerCnt != null ? double.parse(widget.passengerCnt!) : null;
     return Container(
       decoration: const BoxDecoration(
           image: DecorationImage(
@@ -81,8 +88,9 @@ class _DepartureHallAnimationState extends State<DepartureHallAnimation>
       height: stackHeight,
       child: Stack(
         children: [
+          if (!widget.isLoading && passengerCnt != null)
           for (int i = 0; i < _cloudCount; i += 2)
-            _buildAnimatedCloud(i, stackHeight),
+              _buildAnimatedCloud(i, stackHeight, passengerCnt),
           AnimatedBuilder(
               animation: _characterAnimation,
               builder: (context, child) {
@@ -100,15 +108,20 @@ class _DepartureHallAnimationState extends State<DepartureHallAnimation>
                 width: characterWidth,
                 height: characterHeight,
               )),
+          if (!widget.isLoading && passengerCnt != null)
           for (int i = 1; i < _cloudCount; i += 2)
-            _buildAnimatedCloud(i, stackHeight),
+              _buildAnimatedCloud(i, stackHeight, passengerCnt),
         ],
       ),
     );
   }
 
-  Widget _buildAnimatedCloud(int index, double stackHeight) {
-    double imageHeight = 88;
+  Widget _buildAnimatedCloud(
+      int index, double stackHeight, double passengerCnt) {
+    double imageHeight = 100;
+
+    Color? color =
+        passengerCnt < 60000 ? null : const Color.fromARGB(255, 22, 55, 80);
     return AnimatedBuilder(
       animation: _animations[index],
       builder: (context, child) {
@@ -123,7 +136,13 @@ class _DepartureHallAnimationState extends State<DepartureHallAnimation>
       },
       child: Transform.scale(
           scale: 0.5 + _cloudScaleFactors[index] / 2,
-          child: Image.asset('assets/images/white_cloud.png')),
+          child: Image.asset(
+            'assets/images/white_cloud.png',
+            height: imageHeight,
+            fit: BoxFit.fitHeight,
+            colorBlendMode: BlendMode.modulate,
+            color: color,
+          )),
     );
   }
 }
