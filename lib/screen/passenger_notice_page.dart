@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../common/style.dart';
 import '../model/departure_hall_enum.dart';
 import '../model/passenger_notice_list.dart';
 import '../service/api_service.dart';
-import '../widget/passenger_notice/departure_hall_select_box.dart';
+import '../widget/passenger_notice/animated_count_text.dart';
+import '../widget/passenger_notice/animated_face_icon.dart';
+import '../widget/passenger_notice/departure_hall_animation.dart';
 
 class PassengerNoticePage extends StatefulWidget {
   const PassengerNoticePage({super.key});
@@ -18,6 +22,7 @@ class _PassengerNoticePageState extends State<PassengerNoticePage> {
   PassengerNoticeList? passengerNoticeList;
   DepartureHallEnum departureHallEnum = DepartureHallEnum.t1sumset2;
   String? _passengerCntAllDay;
+  IconData? _faceIcon;
 
   @override
   void initState() {
@@ -45,6 +50,7 @@ class _PassengerNoticePageState extends State<PassengerNoticePage> {
         passengerNoticeList = dataList;
         isLoading = false;
         _passengerCntAllDay = passengerCntAllDay;
+        _faceIcon = getIconByPassengerCnt(passengerCntAllDay);
       });
     }
   }
@@ -95,30 +101,67 @@ class _PassengerNoticePageState extends State<PassengerNoticePage> {
     }
   }
 
+  IconData getIconByPassengerCnt(String? passengerCnt) {
+    if (passengerCnt == null) return FontAwesomeIcons.question;
+
+    try {
+      double cnt = double.parse(passengerCnt);
+
+      if (cnt < 60000) {
+        return FontAwesomeIcons.faceLaugh;
+      } else {
+        return FontAwesomeIcons.faceDizzy;
+      }
+    } catch (e) {
+      print(e);
+      return FontAwesomeIcons.question;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          const SizedBox(height: 30),
-          DepartureHallSelectBox(
-            isLoading: isLoading,
-            reload: dataFetch,
-            selectedValue: departureHallEnum,
-            setSelectedValue: setDepartureHallEnum,
-          ),
-          const SizedBox(height: 30),
-          if (!isLoading && _passengerCntAllDay != null)
+    return LayoutBuilder(builder: (context, constraints) {
+      double maxHeight = constraints.constrainHeight();
+      double animationHeight = 250;
+      return Container(
+        height: maxHeight,
+        width: MediaQuery.of(context).size.width,
+        color: darkestBlueColor,
+        child: Column(
+          children: [
+            !isLoading && _passengerCntAllDay != null
+                ? Container(
+                    height: (maxHeight - animationHeight) / 2,
+                    width: MediaQuery.of(context).size.width,
+                    color: darkestBlueColor,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        AnimatedFaceIcon(delay: 2, icon: _faceIcon!),
+                        AnimatedCountText(
+                            count: double.parse(_passengerCntAllDay!).round(),
+                            duration: 2),
+                      ],
+                    ),
+                  )
+                : SizedBox(height: (maxHeight - animationHeight) / 2),
+            DepartureHallAnimation(
+                height: animationHeight,
+                isLoading: isLoading,
+                passengerCnt: _passengerCntAllDay),
             Container(
-              child: Column(
-                children: [
-                  Text(departureHallEnum.toString()),
-                  Text(_passengerCntAllDay!),
-                ],
+              height: (maxHeight - animationHeight) / 2,
+              width: MediaQuery.of(context).size.width,
+              alignment: Alignment.center,
+              child: const Text(
+                '안녕',
+                style: TextStyle(color: lightestBlueColor, fontSize: 50),
               ),
-            )
-        ],
-      ),
-    );
+            ),
+          ],
+        ),
+      );
+    });
   }
 }
