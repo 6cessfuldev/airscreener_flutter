@@ -4,8 +4,12 @@ import 'package:flutter/material.dart';
 
 class DepartureHallAnimation extends StatefulWidget {
   const DepartureHallAnimation(
-      {super.key, required this.isLoading, this.passengerCnt});
+      {super.key,
+      required this.height,
+      required this.isLoading,
+      this.passengerCnt});
 
+  final double height;
   final bool isLoading;
   final String? passengerCnt;
 
@@ -73,7 +77,7 @@ class _DepartureHallAnimationState extends State<DepartureHallAnimation>
 
   @override
   Widget build(BuildContext context) {
-    double stackHeight = 250;
+    double stackHeight = widget.height;
     double stackWidth = MediaQuery.of(context).size.width;
     double characterHeight = 120;
     double characterWidth = 120;
