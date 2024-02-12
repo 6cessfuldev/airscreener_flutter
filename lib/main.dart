@@ -45,6 +45,8 @@ class _MyHomePageState extends State<MyHomePage>
   int _selectedIndex = 0;
   late PageController _pageController;
 
+  List<String> title = ['오늘의 출국 예고', '항공편 목록', '항공편 검색'];
+
   @override
   void initState() {
     super.initState();
@@ -63,9 +65,9 @@ class _MyHomePageState extends State<MyHomePage>
       extendBody: true,
       backgroundColor: lightestBlueColor,
       appBar: AppBar(
-        title: const Text(
-          '강미연 화이팅💕',
-          style: TextStyle(color: Colors.white),
+        title: Text(
+          title[_selectedIndex],
+          style: const TextStyle(color: Colors.white),
         ),
         backgroundColor: darkestBlueColor,
       ),
@@ -106,8 +108,7 @@ class _MyHomePageState extends State<MyHomePage>
               icon: Icon(Icons.co_present_outlined), label: '승객 예고'),
           BottomNavigationBarItem(
               icon: Icon(Icons.luggage_outlined), label: '목록'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.search), label: '검색'),
+          BottomNavigationBarItem(icon: Icon(Icons.search), label: '검색'),
         ],
       ),
     );
