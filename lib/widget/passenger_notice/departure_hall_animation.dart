@@ -84,38 +84,40 @@ class _DepartureHallAnimationState extends State<DepartureHallAnimation>
 
     double? passengerCnt =
         widget.passengerCnt != null ? double.parse(widget.passengerCnt!) : null;
-    return Container(
-      decoration: const BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage('assets/images/dawn.png'), fit: BoxFit.fill)),
-      width: stackWidth,
-      height: stackHeight,
-      child: Stack(
-        children: [
-          if (!widget.isLoading && passengerCnt != null)
-          for (int i = 0; i < _cloudCount; i += 2)
-              _buildAnimatedCloud(i, stackHeight, passengerCnt),
-          AnimatedBuilder(
-              animation: _characterAnimation,
-              builder: (context, child) {
-                return Transform.translate(
-                  offset: Offset(
-                      stackWidth / 2 - characterWidth / 2,
-                      stackHeight / 2 -
-                          characterHeight / 2 +
-                          _characterAnimation.value * 20),
-                  child: child,
-                );
-              },
-              child: Image.asset(
-                'assets/images/character.png',
-                width: characterWidth,
-                height: characterHeight,
-              )),
-          if (!widget.isLoading && passengerCnt != null)
-          for (int i = 1; i < _cloudCount; i += 2)
-              _buildAnimatedCloud(i, stackHeight, passengerCnt),
-        ],
+    return ClipRRect(
+      child: Container(
+        decoration: const BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage('assets/images/dawn.png'), fit: BoxFit.fill)),
+        width: stackWidth,
+        height: stackHeight,
+        child: Stack(
+          children: [
+            if (!widget.isLoading && passengerCnt != null)
+              for (int i = 0; i < _cloudCount; i += 2)
+                _buildAnimatedCloud(i, stackHeight, passengerCnt),
+            AnimatedBuilder(
+                animation: _characterAnimation,
+                builder: (context, child) {
+                  return Transform.translate(
+                    offset: Offset(
+                        stackWidth / 2 - characterWidth / 2,
+                        stackHeight / 2 -
+                            characterHeight / 2 +
+                            _characterAnimation.value * 20),
+                    child: child,
+                  );
+                },
+                child: Image.asset(
+                  'assets/images/character.png',
+                  width: characterWidth,
+                  height: characterHeight,
+                )),
+            if (!widget.isLoading && passengerCnt != null)
+              for (int i = 1; i < _cloudCount; i += 2)
+                _buildAnimatedCloud(i, stackHeight, passengerCnt),
+          ],
+        ),
       ),
     );
   }
