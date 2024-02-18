@@ -122,7 +122,7 @@ class _PassengerNoticePageState extends State<PassengerNoticePage> {
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
       double maxHeight = constraints.constrainHeight();
-      double animationHeight = 250;
+      double animationHeight = maxHeight / 2;
       return Container(
         height: maxHeight,
         width: MediaQuery.of(context).size.width,
@@ -138,10 +138,9 @@ class _PassengerNoticePageState extends State<PassengerNoticePage> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        AnimatedFaceIcon(delay: 2, icon: _faceIcon!),
                         AnimatedCountText(
                             count: double.parse(_passengerCntAllDay!).round(),
-                            duration: 2),
+                            duration: 3),
                       ],
                     ),
                   )
@@ -150,15 +149,6 @@ class _PassengerNoticePageState extends State<PassengerNoticePage> {
                 height: animationHeight,
                 isLoading: isLoading,
                 passengerCnt: _passengerCntAllDay),
-            Container(
-              height: (maxHeight - animationHeight) / 2,
-              width: MediaQuery.of(context).size.width,
-              alignment: Alignment.center,
-              child: const Text(
-                '안녕',
-                style: TextStyle(color: lightestBlueColor, fontSize: 50),
-              ),
-            ),
           ],
         ),
       );
