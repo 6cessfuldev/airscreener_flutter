@@ -5,6 +5,7 @@ import 'common/route_manager.dart';
 import 'common/style.dart';
 import 'provider/flights_info_provider.dart';
 import 'screen/checkin_counter_page.dart';
+import 'screen/passenger_notice_page.dart';
 import 'screen/search_page.dart';
 import 'service/preferences_service.dart';
 
@@ -44,6 +45,8 @@ class _MyHomePageState extends State<MyHomePage>
   int _selectedIndex = 0;
   late PageController _pageController;
 
+  List<String> title = ['오늘의 출발 승객 예고', '항공편 목록', '항공편 검색'];
+
   @override
   void initState() {
     super.initState();
@@ -62,9 +65,9 @@ class _MyHomePageState extends State<MyHomePage>
       extendBody: true,
       backgroundColor: lightestBlueColor,
       appBar: AppBar(
-        title: const Text(
-          '강미연 화이팅💕',
-          style: TextStyle(color: Colors.white),
+        title: Text(
+          title[_selectedIndex],
+          style: const TextStyle(color: Colors.white),
         ),
         backgroundColor: darkestBlueColor,
       ),
@@ -77,12 +80,10 @@ class _MyHomePageState extends State<MyHomePage>
                 _selectedIndex = index;
               });
             },
-            children: [
-              const CheckInCounterPage(),
-              const SearchPage(),
-              Container(
-                color: Colors.transparent,
-              ),
+            children: const [
+              PassengerNoticePage(),
+              CheckInCounterPage(),
+              SearchPage(),
             ]),
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -104,10 +105,10 @@ class _MyHomePageState extends State<MyHomePage>
         },
         items: const [
           BottomNavigationBarItem(
-              icon: Icon(Icons.luggage_outlined), label: '목록'),
+              icon: Icon(Icons.co_present_outlined), label: '승객 예고'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.search), label: '검색'),
-          BottomNavigationBarItem(icon: Icon(Icons.settings), label: '설정'),
+              icon: Icon(Icons.luggage_outlined), label: '목록'),
+          BottomNavigationBarItem(icon: Icon(Icons.search), label: '검색'),
         ],
       ),
     );
