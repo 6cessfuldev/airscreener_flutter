@@ -19,7 +19,8 @@ class CheckInCounterPage extends StatefulWidget {
   State<CheckInCounterPage> createState() => _CheckInCounterPageState();
 }
 
-class _CheckInCounterPageState extends State<CheckInCounterPage> {
+class _CheckInCounterPageState extends State<CheckInCounterPage>
+    with AutomaticKeepAliveClientMixin {
   TerminalidEnum terminalid = TerminalidEnum.p01;
   String counterCode = 'A';
   bool _isLoading = true;
@@ -27,6 +28,9 @@ class _CheckInCounterPageState extends State<CheckInCounterPage> {
 
   final ApiService _apiService = ApiService();
   List<DepartingFlightsInfo> _dataList = [];
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void initState() {
@@ -146,6 +150,7 @@ class _CheckInCounterPageState extends State<CheckInCounterPage> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     const double selectBoxHeight = 60;
     const double bottomGap = 5;
 
