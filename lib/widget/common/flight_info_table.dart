@@ -90,7 +90,11 @@ class _FlightInfoTableState extends State<FlightInfoTable> {
                 children: [
                   Text(
                     info.flightId ?? '',
-                    style: const TextStyle(color: darkestBlueColor),
+                    style: const TextStyle(
+                      color: Colors.blue,
+                      decoration: TextDecoration.underline,
+                      decorationColor: Colors.blue,
+                    ),
                     textAlign: TextAlign.center,
                   ),
                   if (info.remark != null && info.remark != "")
