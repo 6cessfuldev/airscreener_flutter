@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../common/style.dart';
 import '../model/departure_hall_enum.dart';
 import '../model/passenger_notice_list.dart';
 import '../service/api_service.dart';
 import '../widget/passenger_notice/animated_count_text.dart';
-import '../widget/passenger_notice/animated_face_icon.dart';
 import '../widget/passenger_notice/departure_hall_animation.dart';
 
 class PassengerNoticePage extends StatefulWidget {
@@ -22,7 +20,6 @@ class _PassengerNoticePageState extends State<PassengerNoticePage> {
   PassengerNoticeList? passengerNoticeList;
   DepartureHallEnum departureHallEnum = DepartureHallEnum.t1sumset2;
   String? _passengerCntAllDay;
-  IconData? _faceIcon;
 
   @override
   void initState() {
@@ -50,7 +47,6 @@ class _PassengerNoticePageState extends State<PassengerNoticePage> {
         passengerNoticeList = dataList;
         isLoading = false;
         _passengerCntAllDay = passengerCntAllDay;
-        _faceIcon = getIconByPassengerCnt(passengerCntAllDay);
       });
     }
   }
@@ -98,23 +94,6 @@ class _PassengerNoticePageState extends State<PassengerNoticePage> {
         return dataList.items!.last.t2sumset2;
       default:
         return null;
-    }
-  }
-
-  IconData getIconByPassengerCnt(String? passengerCnt) {
-    if (passengerCnt == null) return FontAwesomeIcons.question;
-
-    try {
-      double cnt = double.parse(passengerCnt);
-
-      if (cnt < 60000) {
-        return FontAwesomeIcons.faceLaugh;
-      } else {
-        return FontAwesomeIcons.faceDizzy;
-      }
-    } catch (e) {
-      print(e);
-      return FontAwesomeIcons.question;
     }
   }
 
