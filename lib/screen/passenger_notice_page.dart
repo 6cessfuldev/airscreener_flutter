@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../common/style.dart';
 import '../model/departure_hall_enum.dart';
 import '../model/passenger_notice_list.dart';
 import '../service/api_service.dart';
+import '../service/preferences_service.dart';
 import '../widget/passenger_notice/animated_count_text.dart';
 import '../widget/passenger_notice/departure_hall_animation.dart';
 
@@ -17,9 +19,9 @@ class PassengerNoticePage extends StatefulWidget {
 class _PassengerNoticePageState extends State<PassengerNoticePage> {
   final ApiService _apiService = ApiService();
   bool isLoading = true;
-  PassengerNoticeList? passengerNoticeList;
   DepartureHallEnum departureHallEnum = DepartureHallEnum.t1sumset2;
   String? _passengerCntAllDay;
+  PreferencesService prefs = PreferencesService();
 
   @override
   void initState() {
@@ -33,22 +35,42 @@ class _PassengerNoticePageState extends State<PassengerNoticePage> {
         isLoading = true;
       });
     }
-    PassengerNoticeList dataList =
-        await _apiService.getTodayPassengerNoticeList();
-
     String? passengerCntAllDay;
-    if (dataList.status == 200) {
-      passengerCntAllDay =
-          setPassengerCntByDepartureHall(dataList, departureHallEnum);
-    }
 
+    String yymmdd = DateFormat('yyMMdd').format(DateTime.now()).toString();
+
+    List<String>? prefData = prefs.getStringList("passengerCnt");
+    if (prefData != null && prefData.isNotEmpty && prefData.length > 1) {
+      if (prefData[0] != yymmdd) {
+        prefs.setStringList("passengerCnt", []);
+        passengerCntAllDay = await getPassengerCntData(yymmdd);
+      } else {
+        passengerCntAllDay = prefData[1];
+      }
+    } else {
+      passengerCntAllDay = await getPassengerCntData(yymmdd);
+    }
     if (mounted) {
       setState(() {
-        passengerNoticeList = dataList;
         isLoading = false;
         _passengerCntAllDay = passengerCntAllDay;
       });
     }
+  }
+
+  getPassengerCntData(String yymmdd) async {
+    String? passengerCntAllDay;
+    PassengerNoticeList dataList =
+        await _apiService.getTodayPassengerNoticeList();
+
+    if (dataList.status == 200) {
+      passengerCntAllDay =
+          setPassengerCntByDepartureHall(dataList, departureHallEnum);
+      if (passengerCntAllDay != null) {
+        prefs.setStringList("passengerCnt", [yymmdd, passengerCntAllDay]);
+      }
+    }
+    return passengerCntAllDay;
   }
 
   void setDepartureHallEnum(DepartureHallEnum departureHallEnum) {
