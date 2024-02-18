@@ -83,6 +83,19 @@ class _FlightInfoDetailPageState extends State<FlightInfoDetailPage> {
     return '${yyyyMMddHHmm.substring(8, 10)}:${yyyyMMddHHmm.substring(10, 12)}';
   }
 
+  String convertTerminalCodeToStr(String? code) {
+    switch (code) {
+      case "P01":
+        return '제1여객터미널';
+      case "P02":
+        return '탑승동';
+      case "P03":
+        return '제2여객터미널';
+      default:
+        return "";
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     DepartingFlightsInfo? data;
@@ -310,8 +323,11 @@ class _FlightInfoDetailPageState extends State<FlightInfoDetailPage> {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    itemWiget(const Icon(Icons.alt_route),
-                                        '터미널', data?.terminalid ?? ''),
+                                    itemWiget(
+                                        const Icon(Icons.alt_route),
+                                        '터미널',
+                                        convertTerminalCodeToStr(
+                                            data?.terminalid)),
                                     const VerticalDivider(
                                       color: mainBlueColor,
                                       width: 1,
