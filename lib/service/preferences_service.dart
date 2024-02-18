@@ -14,12 +14,24 @@ class PreferencesService {
     _prefs = await SharedPreferences.getInstance();
   }
 
-  void setString(item, value) async {
+  void setString(String item, String value) async {
     await _prefs.setString(item, value);
   }
 
-  getString(item) async {
+  getString(String item) async {
     var value = _prefs.getString(item);
     return value;
+  }
+
+  void setStringList(String item, List<String> value) async {
+    await _prefs.setStringList(item, value);
+  }
+
+  List<String>? getStringList(String item) {
+    try {
+      return _prefs.getStringList(item);
+    } catch (e) {
+      return [];
+    }
   }
 }
