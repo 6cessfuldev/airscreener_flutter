@@ -45,7 +45,7 @@ class _MyHomePageState extends State<MyHomePage>
   int _selectedIndex = 0;
   late PageController _pageController;
 
-  List<String> title = ['오늘의 출국 예고', '항공편 목록', '항공편 검색'];
+  List<String> title = ['오늘의 출발 승객 예고', '항공편 목록', '항공편 검색'];
 
   @override
   void initState() {
