@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class AnimatedCountText extends StatefulWidget {
   const AnimatedCountText(
@@ -40,9 +41,9 @@ class _AnimatedCountTextState extends State<AnimatedCountText>
   @override
   Widget build(BuildContext context) {
     return Text(
-      '${_animation.value.toInt()} 명',
+      '${NumberFormat('#,###').format(_animation.value.toInt())} 명',
       style: const TextStyle(
-          color: Colors.white, fontSize: 20, fontWeight: FontWeight.w600),
+          color: Colors.white, fontSize: 40, fontWeight: FontWeight.w600),
     );
   }
 }
