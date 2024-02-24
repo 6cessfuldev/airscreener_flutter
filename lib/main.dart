@@ -72,19 +72,24 @@ class _MyHomePageState extends State<MyHomePage>
         backgroundColor: darkestBlueColor,
       ),
       body: SafeArea(
-        child: PageView(
-            physics: const NeverScrollableScrollPhysics(),
-            controller: _pageController,
-            onPageChanged: (index) {
-              setState(() {
-                _selectedIndex = index;
-              });
-            },
-            children: const [
-              PassengerNoticePage(),
-              CheckInCounterPage(),
-              SearchPage(),
-            ]),
+        child: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+          },
+          child: PageView(
+              physics: const NeverScrollableScrollPhysics(),
+              controller: _pageController,
+              onPageChanged: (index) {
+                setState(() {
+                  _selectedIndex = index;
+                });
+              },
+              children: const [
+                PassengerNoticePage(),
+                CheckInCounterPage(),
+                SearchPage(),
+              ]),
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: lightBlueColor,

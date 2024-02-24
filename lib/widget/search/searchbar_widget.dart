@@ -30,17 +30,36 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
   List<DepartingFlightsInfo> typeAheadData = [];
   int lastDataListLenght = 0;
   late FocusNode textFieldFocus;
+  bool _textFieldHasFocus = false;
 
   @override
   void initState() {
     super.initState();
     textFieldFocus = FocusNode();
+    textFieldFocus.addListener(_onFocusChange);
   }
 
   @override
   void dispose() {
-    super.dispose();
     textFieldFocus.dispose();
+    textFieldFocus.removeListener(_onFocusChange);
+    super.dispose();
+  }
+
+  void _onFocusChange() {
+    if (textFieldFocus.hasFocus) {
+      if (mounted) {
+        setState(() {
+          _textFieldHasFocus = true;
+        });
+      }
+    } else {
+      if (mounted) {
+        setState(() {
+          _textFieldHasFocus = false;
+        });
+      }
+    }
   }
 
   List<DepartingFlightsInfo> filterData(
@@ -71,6 +90,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
     double typeAheadItemHeight = 50;
     double borderRadius = 20.0;
     double bottomGapHeigt = 0;
+    print('textWidget hasFocus $_textFieldHasFocus');
 
     return Column(
       children: [
@@ -82,7 +102,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
               width: searchBarWidth,
               height: widget.hasInputText &&
                       dataList.isNotEmpty &&
-                      textFieldFocus.hasFocus
+                      _textFieldHasFocus
                   ? searchInputHeight +
                       searchBarPadding * 2 +
                       dataList.length * typeAheadItemHeight +
@@ -91,7 +111,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
               decoration: BoxDecoration(
                 color: backgroundColor,
                 borderRadius: BorderRadius.circular(borderRadius),
-                boxShadow: !textFieldFocus.hasFocus
+                boxShadow: !_textFieldHasFocus
                     ? null
                     : [
                         BoxShadow(
@@ -115,7 +135,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                       padding: const EdgeInsets.all(5),
                       child: searchInputWidget(searchInputHeight,
                           searchBarWidth, submitBtnWidth, searchBarPadding)),
-                  if (widget.hasInputText && textFieldFocus.hasFocus)
+                  if (widget.hasInputText && _textFieldHasFocus)
                     ListView.builder(
                       shrinkWrap: true,
                       itemCount: typeAheadCount,
@@ -220,7 +240,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(9999.0),
             color: mainBlueColor,
-            boxShadow: !widget.hasInputText || !textFieldFocus.hasFocus
+            boxShadow: !widget.hasInputText || !_textFieldHasFocus
                 ? null
                 : [
                     BoxShadow(
