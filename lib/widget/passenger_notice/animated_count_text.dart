@@ -34,8 +34,8 @@ class _AnimatedCountTextState extends State<AnimatedCountText>
 
   @override
   void dispose() {
-    super.dispose();
     _controller.dispose();
+    super.dispose();
   }
 
   @override
