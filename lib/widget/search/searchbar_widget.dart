@@ -92,120 +92,122 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
     double bottomGapHeigt = 0;
     print('textWidget hasFocus $_textFieldHasFocus');
 
-    return Column(
-      children: [
-        Consumer<FlightsInfoProvider>(
-          builder: (context, value, child) {
-            List<DepartingFlightsInfo> dataList = value.dataList;
-            dataList = filterData(widget.inputController.text, dataList);
-            return Container(
-              width: searchBarWidth,
-              height: widget.hasInputText &&
-                      dataList.isNotEmpty &&
-                      _textFieldHasFocus
-                  ? searchInputHeight +
-                      searchBarPadding * 2 +
-                      dataList.length * typeAheadItemHeight +
-                      bottomGapHeigt
-                  : searchInputHeight + searchBarPadding * 2,
-              decoration: BoxDecoration(
-                color: backgroundColor,
-                borderRadius: BorderRadius.circular(borderRadius),
-                boxShadow: !_textFieldHasFocus
-                    ? null
-                    : [
-                        BoxShadow(
-                            offset: const Offset(
-                                outsideShadowDistance, outsideShadowDistance),
-                            color: downsideShadowColor,
-                            blurRadius: outsideShadowDistance,
-                            spreadRadius: 2),
-                        const BoxShadow(
-                            offset: Offset(
-                                -outsideShadowDistance, -outsideShadowDistance),
-                            color: upsideShadowColor,
-                            blurRadius: outsideShadowDistance,
-                            spreadRadius: 2)
-                      ],
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Padding(
-                      padding: const EdgeInsets.all(5),
-                      child: searchInputWidget(searchInputHeight,
-                          searchBarWidth, submitBtnWidth, searchBarPadding)),
-                  if (widget.hasInputText && _textFieldHasFocus)
-                    ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: typeAheadCount,
-                      itemBuilder: (context, index) {
-                        return InkWell(
-                          onTap: () {
-                            if (dataList[index].flightId != null &&
-                                dataList[index].scheduleDateTime != null) {
-                              Navigator.of(context).pushNamed(
-                                  'FlightInfoDetailPage',
-                                  arguments: FlightInfoDetailArgument(
-                                      flightId: dataList[index].flightId!,
-                                      scheduleDateTime:
-                                          dataList[index].scheduleDateTime!,
-                                      estimatedDateTime:
-                                          dataList[index].estimatedDateTime));
-                            }
-                          },
-                          child: Container(
-                              child: dataList.length > index
-                                  ? Container(
-                                      decoration: const BoxDecoration(
-                                          border: Border(
-                                              top: BorderSide(
-                                                  color: Colors.white70))),
-                                      padding:
-                                          const EdgeInsetsDirectional.symmetric(
-                                              horizontal: 10),
-                                      alignment: Alignment.centerLeft,
-                                      height: typeAheadItemHeight,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            '${dataList[index].flightId}',
-                                            overflow: TextOverflow.ellipsis,
-                                            style: const TextStyle(
-                                                color: mainBlueColor,
-                                                fontSize: 17,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          Text(
-                                            ' • ${dataList[index].airline}',
-                                            overflow: TextOverflow.ellipsis,
-                                            style: const TextStyle(
-                                                color: fontColor, fontSize: 17),
-                                          ),
-                                          Expanded(
-                                            child: Text(
-                                              ' • ${dataList[index].airport}',
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Consumer<FlightsInfoProvider>(
+            builder: (context, value, child) {
+              List<DepartingFlightsInfo> dataList = value.dataList;
+              dataList = filterData(widget.inputController.text, dataList);
+              return Container(
+                width: searchBarWidth,
+                height: widget.hasInputText &&
+                        dataList.isNotEmpty &&
+                        _textFieldHasFocus
+                    ? searchInputHeight +
+                        searchBarPadding * 2 +
+                        dataList.length * typeAheadItemHeight +
+                        bottomGapHeigt
+                    : searchInputHeight + searchBarPadding * 2,
+                decoration: BoxDecoration(
+                  color: backgroundColor,
+                  borderRadius: BorderRadius.circular(borderRadius),
+                  boxShadow: !_textFieldHasFocus
+                      ? null
+                      : [
+                          BoxShadow(
+                              offset: const Offset(
+                                  outsideShadowDistance, outsideShadowDistance),
+                              color: downsideShadowColor,
+                              blurRadius: outsideShadowDistance,
+                              spreadRadius: 2),
+                          const BoxShadow(
+                              offset: Offset(-outsideShadowDistance,
+                                  -outsideShadowDistance),
+                              color: upsideShadowColor,
+                              blurRadius: outsideShadowDistance,
+                              spreadRadius: 2)
+                        ],
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Padding(
+                        padding: const EdgeInsets.all(5),
+                        child: searchInputWidget(searchInputHeight,
+                            searchBarWidth, submitBtnWidth, searchBarPadding)),
+                    if (widget.hasInputText && _textFieldHasFocus)
+                      ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: typeAheadCount,
+                        itemBuilder: (context, index) {
+                          return InkWell(
+                            onTap: () {
+                              if (dataList[index].flightId != null &&
+                                  dataList[index].scheduleDateTime != null) {
+                                Navigator.of(context).pushNamed(
+                                    'FlightInfoDetailPage',
+                                    arguments: FlightInfoDetailArgument(
+                                        flightId: dataList[index].flightId!,
+                                        scheduleDateTime:
+                                            dataList[index].scheduleDateTime!,
+                                        estimatedDateTime:
+                                            dataList[index].estimatedDateTime));
+                              }
+                            },
+                            child: Container(
+                                child: dataList.length > index
+                                    ? Container(
+                                        decoration: const BoxDecoration(
+                                            border: Border(
+                                                top: BorderSide(
+                                                    color: Colors.white70))),
+                                        padding: const EdgeInsetsDirectional
+                                            .symmetric(horizontal: 10),
+                                        alignment: Alignment.centerLeft,
+                                        height: typeAheadItemHeight,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              '${dataList[index].flightId}',
+                                              overflow: TextOverflow.ellipsis,
+                                              style: const TextStyle(
+                                                  color: mainBlueColor,
+                                                  fontSize: 17,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            Text(
+                                              ' • ${dataList[index].airline}',
                                               overflow: TextOverflow.ellipsis,
                                               style: const TextStyle(
                                                   color: fontColor,
                                                   fontSize: 17),
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                    )
-                                  : Container()),
-                        );
-                      },
-                    )
-                ],
-              ),
-            );
-          },
-        ),
-      ],
+                                            Expanded(
+                                              child: Text(
+                                                ' • ${dataList[index].airport}',
+                                                overflow: TextOverflow.ellipsis,
+                                                style: const TextStyle(
+                                                    color: fontColor,
+                                                    fontSize: 17),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    : Container()),
+                          );
+                        },
+                      )
+                  ],
+                ),
+              );
+            },
+          ),
+        ],
+      ),
     );
   }
 

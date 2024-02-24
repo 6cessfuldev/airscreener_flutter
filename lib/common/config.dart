@@ -1,1 +1,1 @@
-const typeAheadCount = 8;
+const typeAheadCount = 4;
