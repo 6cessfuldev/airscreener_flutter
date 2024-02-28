@@ -60,7 +60,7 @@ class ApiService {
     //     "ApiService - makeFlightInfoRequestList : from = $from, to = $to");
     List<Map<String, dynamic>> requestList = [];
     if (from != null && to != null) {
-      for (var i = 0; i < to.day - from.day + 1; i++) {
+      for (var i = 0; i < to.difference(from).inDays + 1; i++) {
         Map<String, dynamic> request = {
           'pageNo': 1,
           'numOfRows': length ?? 4000,
@@ -72,7 +72,7 @@ class ApiService {
         };
         if (i == 0) {
           request['from_time'] = DateFormat('HHmm').format(from).toString();
-        } else if (i == to.day - from.day) {
+        } else if (i == to.difference(from).inDays) {
           request['to_time'] = DateFormat('HHmm')
               .format(DateTime.now().add(const Duration(hours: 24)))
               .toString();
@@ -137,6 +137,9 @@ class ApiService {
 
     List<Map<String, dynamic>> requestList =
         makeFlightInfoRequestList(from, to);
+
+    debugPrint(
+        "ApiService - getFlightsInfoByTime : requestList = $requestList");
 
     // debugPrint(
     //     "ApiService - getFlightsInfoByTime : requestList.length = ${requestList.length}");
