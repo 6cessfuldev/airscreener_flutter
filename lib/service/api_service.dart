@@ -31,7 +31,8 @@ class ApiService {
   Future<DepartingFlightsList> getDepartingFlightsList(
       Map<String, dynamic> request,
       {defaultData = false}) async {
-    debugPrint('[API] request : $request');
+    // debugPrint('ApiService - getDepartingFlightsList');
+    // debugPrint('[API] request : $request');
     String path = _departingFlightsListPath;
     request['serviceKey'] = _departingFlightsListKey;
 
@@ -55,6 +56,8 @@ class ApiService {
   List<Map<String, dynamic>> makeFlightInfoRequestList(
       DateTime? from, DateTime? to,
       {String? flightId, int? length, String timetype = 'E'}) {
+    // debugPrint(
+    //     "ApiService - makeFlightInfoRequestList : from = $from, to = $to");
     List<Map<String, dynamic>> requestList = [];
     if (from != null && to != null) {
       for (var i = 0; i < to.day - from.day + 1; i++) {
@@ -129,10 +132,14 @@ class ApiService {
 
   Future<List<DepartingFlightsInfo>> getFlightsInfoByTime(
       DateTime from, DateTime to) async {
+    // debugPrint("ApiService - getFlightsInfoByTime");
     if (from.isAfter(to)) return [];
 
     List<Map<String, dynamic>> requestList =
         makeFlightInfoRequestList(from, to);
+
+    // debugPrint(
+    //     "ApiService - getFlightsInfoByTime : requestList.length = ${requestList.length}");
 
     List<Future> tasks = [];
     tasks = requestList.map((e) {
@@ -147,6 +154,9 @@ class ApiService {
         .where((e) => e.status == 200)
         .expand<DepartingFlightsInfo>((e) => e.items)
         .toList();
+
+    // debugPrint(
+    //     "ApiService - getFlightsInfoByTime : resultList.length = ${resultList.length}");
     return resultList;
   }
 
