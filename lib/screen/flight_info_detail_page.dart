@@ -113,10 +113,6 @@ class _FlightInfoDetailPageState extends State<FlightInfoDetailPage> {
                     color: mainBlueColor, fontWeight: FontWeight.w600)),
             actions: [
               IconButton(onPressed: dataFetch, icon: const Icon(Icons.refresh)),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.more_vert_outlined),
-              )
             ],
           ),
           body: !isLoading && _dataList.isEmpty
