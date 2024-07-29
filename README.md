@@ -1,16 +1,10 @@
-# airscreen
+# 인천공항 항공스케줄(1개월/개인) - Flutter
 
-A new Flutter project.
+공공 데이터 Open API를 활용한 보안검색요원용 인천공항 혼잡도 측정 어플리케이션
 
-## Getting Started
+기간: 2024.01 ~ 2024.02
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- HTTP 통신을 통한 항공편 데이터 수집 및 검색 기능 구현
+- Provider를 통한 상태 관리 구현
+- json_serializable을 활용한 데이터 모델 구현
+- 앱스토어 출시 및 배포
