@@ -2,7 +2,7 @@
 인천공항 보안검색요원을 위한 항공스케줄 정보 안내 어플리케이션
 
 ## 앱스토어 
-https://apps.apple.com/app/%EC%9D%B8%EC%B2%9C%EA%B3%B5%ED%95%AD-%EB%B9%84%ED%96%89%EC%8A%A4%EC%BC%80%EC%A4%84/id6476652110
+[앱스토어 링크](https://apps.apple.com/app/%EC%9D%B8%EC%B2%9C%EA%B3%B5%ED%95%AD-%EB%B9%84%ED%96%89%EC%8A%A4%EC%BC%80%EC%A4%84/id6476652110)
 
 ## 기간
 2024.01 ~ 2024.02
